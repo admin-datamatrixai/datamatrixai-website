@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">DataMatrixAI Assessment Engine: Adaptive AI-Based Assessment & Competency Analytics | DatamatrixAI</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <style>
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            background: rgba(0,10,30,0.95) !important;
+        }
+        #read-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(to right, #0057B8, #00A651);
+            z-index: 99999;
+            transition: width 0.1s linear;
+        }
+
+        .post-article {
+            font-family: 'Inter', sans-serif;
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .post-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-top: 12px;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .post-body h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(0, 166, 81, 0.4);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-body h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: #6ee7b7;
+            margin-top: 32px;
+            margin-bottom: 14px;
+            letter-spacing: 0.01em;
+        }
+
+        .post-body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .post-body p {
+            margin-bottom: 18px;
+            font-weight: 400;
+        }
+
+        .post-body strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .sidebar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            margin-bottom: 8px;
+            background: rgba(0, 20, 55, 0.2);
+        }
+        .sidebar-item:hover {
+            background: rgba(0, 166, 81, 0.15);
+            color: #ffffff;
+        }
+        .sidebar-item.active {
+            background: rgba(0, 166, 81, 0.25);
+            border-left-color: #00A651;
+            color: #ffffff;
+        }
+
+        .wf-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+            background: rgba(0, 35, 20, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 166, 81, 0.3);
+        }
+        .wf-step {
+            background: rgba(0, 30, 15, 0.6);
+            border: 1px solid rgba(0, 166, 81, 0.4);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #fff;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .wf-arrow {
+            color: #00A651;
+            font-size: 0.9rem;
+        }
+
+        .cs-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
+        .cs-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+        
+        .cs-card {
+            background: rgba(0, 20, 60, 0.4);
+            border: 1px solid rgba(0, 166, 81, 0.25);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .cs-card p { font-size: 0.88rem; color: #9ca3af; margin: 0; line-height: 1.6; }
+
+        .cs-feature-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 20, 60, 0.4);
+            border: 1px solid rgba(0, 166, 81, 0.25);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #e5e7eb;
+            line-height: 1.4;
+        }
+        .cs-feature-card i {
+            color: #00A651;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, rgba(0, 35, 20, 0.4) 0%, rgba(5, 10, 8, 0.8) 100%);
+            border: 1px solid rgba(0, 166, 81, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+        .profile-item label { display: block; font-size: 0.72rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .profile-item span { font-size: 1.05rem; font-weight: 600; color: #fff; }
+        .profile-item .highlight-val { color: #6ee7b7; }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.88rem;
+        }
+        .compare-table th, .compare-table td {
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            text-align: left;
+        }
+        .compare-table th { background: rgba(0, 166, 81, 0.2); color: #fff; font-family: 'Outfit', sans-serif; font-weight: 600; }
+        .compare-table td { background: rgba(0, 20, 55, 0.2); color: #d1d5db; }
+
+        .icon-list { list-style: none; padding: 0; margin: 16px 0; }
+        .icon-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; font-size: 0.92rem; color: #e5e7eb; line-height: 1.5; }
+        .icon-list li i { color: #00A651; font-size: 1rem; width: 20px; margin-top: 3px; text-align: center; flex-shrink: 0; }
+        .icon-list.check-list li i { color: #10b981; }
+
+        .mock-dashboard {
+            background: #06120e;
+            border: 1px solid rgba(0, 166, 81, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 28px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 166, 81, 0.25);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .dash-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dash-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+        .dash-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .kpi-card {
+            background: rgba(0, 30, 15, 0.5);
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+        .kpi-label { font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.03em; }
+        .kpi-val { font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 4px; }
+        .dash-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+        .chart-box {
+            background: rgba(0, 20, 12, 0.6);
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .box-title { font-size: 0.78rem; font-weight: 600; color: #d1d5db; margin-bottom: 10px; }
+        .table-box {
+            background: rgba(0, 20, 12, 0.6);
+            border: 1px solid rgba(0, 166, 81, 0.2);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .dash-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        .dash-table th { text-align: left; color: #9ca3af; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500; }
+        .dash-table td { padding: 8px 0; color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .status-critical { color: #ef4444; font-weight: 600; }
+        .status-optimal { color: #10b981; font-weight: 600; }
+
+        /* ============================================================
+           LMS CONTROL CENTER SCREENSHOT GALLERY
+           ============================================================ */
+        .lms-gallery-container {
+            background: rgba(0, 20, 45, 0.6);
+            border: 1px solid rgba(0, 166, 81, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 28px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .lms-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 166, 81, 0.25);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+        .lms-gallery-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .lms-gallery-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .lms-screenshot-card {
+            background: rgba(0, 15, 35, 0.5);
+            border: 1px solid rgba(0, 166, 81, 0.25);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .lms-screenshot-card:hover {
+            border-color: rgba(0, 166, 81, 0.6);
+            transform: translateY(-2px);
+        }
+        .lms-screenshot-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid rgba(0, 166, 81, 0.2);
+        }
+        .lms-screenshot-caption {
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            background: rgba(0, 10, 25, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lms-screenshot-caption i {
+            color: #00A651;
+        }
+
+        @media (max-width: 768px) {
+            .dash-body { grid-template-columns: 1fr; }
+            .post-title { font-size: 1.75rem; }
+            .post-body h2 { font-size: 1.3rem; margin-top: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="read-progress"></div>
+
+    <div class="post-layout" id="postLayout">
+
+        <aside class="post-sidebar" id="postSidebar">
+            <div class="sidebar-header">
+                <a href="case-studies.html" class="sidebar-back">
+                    <i class="fas fa-arrow-left"></i> All Case Studies
+                </a>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+            </nav>
+        </aside>
+
+        <main class="post-main" id="postMain">
+            <article class="post-article">
+
+                <div class="post-header">
+                    <div class="post-header-meta">
+                        <span class="blog-category-badge edtech" style="background: rgba(0, 166, 81, 0.2); color: #00A651; border: 1px solid rgba(0, 166, 81, 0.4); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">EDTECH</span>
+                        <span class="post-meta-item"><i class="fas fa-calendar-alt"></i> July 2026</span>
+                        <span class="post-meta-item"><i class="fas fa-clock"></i> Case Study</span>
+                    </div>
+                    <h1 class="post-title">DataMatrixAI Assessment Engine: Adaptive AI-Based Assessment & Competency Analytics</h1>
+
+                    <div class="blog-tags" style="margin-top: 1rem; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="blog-tag" style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem;">Christ University</span>
+                        <span class="blog-tag" style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem;">CFA Level-1 Rigor</span>
+                        <span class="blog-tag" style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem;">Adaptive Examination Platform</span>
+                        <span class="blog-tag" style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem;">Zero-Overlap Engine</span>
+                    </div>
+                </div>
+
+                <div class="post-body">
+                    <h2>The Institutional Challenge</h2>
+                    <p>Executing high-stakes certification assessments like CFA Level-1 demands an infrastructure capable of enforcing strict testing blueprints, dynamic paper generation, and real-time execution stability. Traditional assessment management systems suffer from static paper repositories, memory bias from repeated items, and rigid topic weight allocations.</p>
+                    <p>When preparing candidates for globally standardized examinations, academic institutions face severe friction due to manual question set assembly, inadequate distractor quality, and slow diagnostic feedback cycles, leaving educators blind to specific candidate weak points prior to official exams.</p>
+
+                    <h3>Critical Institutional Challenges</h3>
+                    <ul class="icon-list">
+                        <li><i class="fas fa-database"></i> <span><strong>Static Question Repository Constraints:</strong> Reusing question sets across test attempts compromises evaluation validity and creates memory bias.</span></li>
+                        <li><i class="fas fa-sliders"></i> <span><strong>Inflexible Weight Enforcements:</strong> Inability to algorithmically enforce strict subject percentage quotas across multi-module blueprints.</span></li>
+                        <li><i class="fas fa-hourglass-half"></i> <span><strong>Processing & Evaluation Latency:</strong> Traditional platforms delay diagnostic report generation, missing critical intervention windows.</span></li>
+                        <li><i class="fas fa-layer-group"></i> <span><strong>Plausible Distractor Generation Gap:</strong> Inability to synthesize dynamic, Level-1 quality multiple-choice options with realistic numerical/conceptual traps.</span></li>
+                        <li><i class="fas fa-chart-line"></i> <span><strong>Lack of Real-Time Cohort Analytics:</strong> Faculty lack real-time visibility into overall candidate readiness across specific financial modules.</span></li>
+                    </ul>
+
+                    <h3>Traditional Assessment Workflow</h3>
+                    <div class="wf-horizontal">
+                        <div class="wf-step">Static Question Bank</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Manual Paper Assembly</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Scheduled Exam Window</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Manual/Batch Evaluation</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Basic Pass/Fail Score</div>
+                    </div>
+                    <blockquote style="margin-top: -12px; font-size: 0.85rem; color: #9ca3af; margin-bottom: 24px;">
+                        <em>Characteristics: High Memory Bias • Rigid Topic Ratios • Delayed Feedback • Limited Diagnostics</em>
+                    </blockquote>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0, 166, 81, 0.15); margin: 36px 0;">
+
+                    <h2>The DataMatrixAI Assessment Platform Architecture</h2>
+                    <p><strong>Proven AI-Driven Examination Engine:</strong> Engineered for high-rigor professional certifications, DataMatrixAI provides an end-to-end adaptive assessment system. Powered by dynamic synthesis algorithms and real-time execution services, the platform guarantees that every generated paper meets exact blueprint constraints while eliminating item duplication.</p>
+
+                    <h3>Data Convergence into Assessment Engine</h3>
+                    <div class="cs-grid-2">
+                        <div class="cs-card">
+                            <h4>Data & Blueprint Inputs</h4>
+                            <ul class="icon-list" style="margin-bottom:0;">
+                                <li><i class="fas fa-file-contract"></i> <span>Official Syllabus Percentage Quotas</span></li>
+                                <li><i class="fas fa-cubes"></i> <span>Multi-Module Topic Hierarchy</span></li>
+                                <li><i class="fas fa-user-clock"></i> <span>Candidate Attempt History Log</span></li>
+                                <li><i class="fas fa-stopwatch"></i> <span>Timed Exam Configuration Rules</span></li>
+                            </ul>
+                        </div>
+                        <div class="cs-card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                            <i class="fas fa-microchip" style="font-size: 2.8rem; color: #00A651; margin-bottom: 12px;"></i>
+                            <h4>Adaptive Synthesis Engine</h4>
+                            <p>Processes complex blueprint parameters to dynamically compile zero-overlap exam papers with instant evaluation streams.</p>
+                        </div>
+                    </div>
+
+                    <h3>End-to-End Exam Generation & Evaluation Workflow</h3>
+                    <div class="wf-horizontal" style="flex-wrap: wrap;">
+                        <div class="wf-step">Blueprint Ingestion</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Attempt Tracking Query</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Dynamic Synthesis</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Distractor Validation</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Zero-Overlap Paper Assembly</div>
+                    </div>
+                    <div class="wf-horizontal" style="flex-wrap: wrap; margin-top: -12px;">
+                        <div class="wf-step">Synchronized Exam Delivery</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Real-Time Scoring</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Competency Breakdown</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Targeted Academic Intervention</div>
+                    </div>
+
+                    <h3>Core Examination Engine Capabilities</h3>
+                    <div class="cs-grid-3">
+                        <div class="cs-card">
+                            <h4>Algorithmic Synthesis</h4>
+                            <p>Generates Level-1 complexity question items with mathematically designed distractors.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Zero-Overlap Engine</h4>
+                            <p>Enforces algorithmic non-repetition across multiple attempts for candidate tracking.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Blueprint Weight Compliance</h4>
+                            <p>Strictly allocates exact percentage weights for each topic as defined by official guidelines.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Exam Pattern Engine</h4>
+                            <p>Replicates official exam cadence, section rules, dynamic timers, and scoring formulas.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Real-Time Execution</h4>
+                            <p>High-concurrency platform engine ensuring zero latency during synchronized exam windows.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Competency Analytics</h4>
+                            <p>Delivers immediate deep-dive breakdowns across individual subject modules and concepts.</p>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0, 166, 81, 0.15); margin: 36px 0;">
+
+                    <h2>Live Deployment Session Overview</h2>
+                    <p>The following deployment highlight demonstrates how Christ University utilized the DataMatrixAI Assessment Engine during a live, synchronized CFA Level-1 mock assessment, delivering 100% execution stability and precise diagnostic results.</p>
+
+                    <div class="profile-card">
+                        <h4 style="margin-bottom: 16px; color: #00A651;">Live Examination Execution Profile (Christ University)</h4>
+                        <div class="profile-grid">
+                            <div class="profile-item"><label>Institution</label><span>Christ University</span></div>
+                            <div class="profile-item"><label>Active Candidates</label><span>40 Synchronized Users</span></div>
+                            <div class="profile-item"><label>Exam Blueprint</label><span>CFA Level-1 Rigor</span></div>
+                            <div class="profile-item"><label>Blueprint Accuracy</label><span class="highlight-val">100% Strict Weighting</span></div>
+                            <div class="profile-item"><label>Platform Downtime</label><span>0.00 Seconds</span></div>
+                            <div class="profile-item"><label>Diagnostic Latency</label><span class="highlight-val">&lt; 1.0 Second</span></div>
+                        </div>
+                    </div>
+
+                    <h3>Execution Findings & Results</h3>
+                    <ul class="icon-list check-list">
+                        <li><i class="fas fa-circle-check"></i> <span>Achieved 0% question overlap across repeat mock attempts per candidate.</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Enforced strict topic percentage weighting (Ethical Standards, FRA, Equity, Fixed Income).</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Maintained seamless high-concurrency throughput across synchronized exam start windows.</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Generated instant subject-wise competency scorecards immediately upon test submission.</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Pinpointed specific conceptual weaknesses (e.g., Deferred Tax Liability accounting) for faculty focus.</span></li>
+                    </ul>
+                    <div style="background: rgba(0, 166, 81, 0.12); border-left: 4px solid #00A651; padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0; color: #e5e7eb;">
+                        <strong style="color: #6ee7b7;">Outcome:</strong> Flawless live execution, 100% blueprint compliance, and actionable student-level competency diagnostic delivery.
+                    </div>
+
+                    <!-- <h3>Assessment Control Center & Analytics Dashboard</h3>
+                    <div class="mock-dashboard">
+                        <div class="dash-header">
+                            <div class="dash-title">
+                                <i class="fas fa-chart-pie" style="color: #00A651;"></i> DataMatrixAI Competency Hub — CFA Level-1
+                            </div>
+                            <span class="dash-badge"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Live Session Complete</span>
+                        </div>
+
+                        <div class="dash-kpis">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Active Test Takers</div>
+                                <div class="kpi-val">40</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Questions Delivered</div>
+                                <div class="kpi-val" style="color: #00A651;">7,200</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Blueprint Match</div>
+                                <div class="kpi-val" style="color: #10b981;">100%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Item Overlap Rate</div>
+                                <div class="kpi-val" style="color: #00A651;">0.0%</div>
+                            </div>
+                        </div>
+
+                        <div class="dash-body">
+                            <div class="chart-box">
+                                <div class="box-title"><i class="fas fa-chart-bar" style="color: #00A651;"></i> Subject Competency Mastery vs Target Benchmark</div>
+                                <svg viewBox="0 0 400 130" style="width: 100%; height: auto; overflow: visible;">
+                                    <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.05)" />
+                                    <line x1="0" y1="70" x2="400" y2="70" stroke="rgba(255,255,255,0.05)" />
+                                    <line x1="0" y1="110" x2="400" y2="110" stroke="rgba(255,255,255,0.05)" />
+                                    <line x1="0" y1="50" x2="400" y2="50" stroke="#00A651" stroke-width="1.5" stroke-dasharray="4,4" />
+                                    <path d="M0,80 Q70,40 140,65 T280,35 T400,60" fill="none" stroke="#6ee7b7" stroke-width="2.5" />
+                                    <circle cx="280" cy="35" r="4" fill="#10b981" />
+                                    <text x="250" y="25" fill="#10b981" font-size="8" font-weight="600">Ethics: 82% Avg</text>
+                                </svg>
+                                <div style="display: flex; gap: 16px; font-size: 0.7rem; color: #9ca3af; margin-top: 8px;">
+                                    <span><i class="fas fa-minus" style="color: #00A651;"></i> Target MPS Benchmark (70%)</span>
+                                    <span><i class="fas fa-minus" style="color: #6ee7b7;"></i> Candidate Cohort Average</span>
+                                </div>
+                            </div>
+
+                            <div class="table-box">
+                                <div class="box-title"><i class="fas fa-list-check" style="color: #6ee7b7;"></i> Topic Mastery Index</div>
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Module</th>
+                                            <th>Score</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ethical Standards</td>
+                                            <td class="status-optimal">82.4%</td>
+                                            <td><span style="background: rgba(16,185,129,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#10b981;">Strong</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Financial Reporting</td>
+                                            <td class="status-critical">58.1%</td>
+                                            <td><span style="background: rgba(239,68,68,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#ef4444;">Focus Area</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Equity Investments</td>
+                                            <td class="status-optimal">74.8%</td>
+                                            <td><span style="background: rgba(16,185,129,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#10b981;">On Track</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <h3>Assessment Control Center & Analytics Dashboard</h3>
+                    <div class="lms-gallery-container">
+                        <div class="lms-gallery-header">
+                            <div class="lms-gallery-title">
+                                <i class="fas fa-desktop" style="color: #00A651;"></i> DataMatrixAI Competency Hub — Live Platform Interface
+                            </div>
+                            <span class="dash-badge"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Active System Deployment</span>
+                        </div>
+
+                        <div class="lms-gallery-grid">
+                            <!-- Screenshot 1: Admin Student Overview -->
+                            <div class="lms-screenshot-card">
+                                <img src="assets/images/LMS-CS-SS-01.png" alt="DataMatrixAI LMS Analytics Admin Dashboard">
+                                <div class="lms-screenshot-caption">
+                                    <i class="fas fa-users-gear"></i>
+                                    <span><strong>Admin Analytics Dashboard:</strong> Centralized student activity, login tracking, system history logs, and exam management.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 2: Book-wise Attempt Analytics -->
+                            <div class="lms-screenshot-card">
+                                <img src="assets/images/LMS-CS-SS-02.png" alt="Detailed Student Performance Breakdown">
+                                <div class="lms-screenshot-caption">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span><strong>Book-Wise Performance Breakdown:</strong> Multi-session score tracking with specific accuracy percentages across Economics, Ethics, FSA, and Quant.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 3: Simulated Exam Summary -->
+                            <div class="lms-screenshot-card">
+                                <img src="assets/images/LMS-CS-SS-03.png" alt="CFA Simulated Exam Results Dashboard">
+                                <div class="lms-screenshot-caption">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span><strong>Simulated Exam Results:</strong> Session-level scorecard displaying category topic performance and instant answer review triggers.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 4: Question Review & Rationales -->
+                            <div class="lms-screenshot-card">
+                                <img src="assets/images/LMS-CS-SS-04.png" alt="CFA Exam Review and Answer Rationale UI">
+                                <div class="lms-screenshot-caption">
+                                    <i class="fas fa-square-check"></i>
+                                    <span><strong>Granular Item Review:</strong> Interactive question matrix with option-level distractors, answer validation, and detailed conceptual explanations.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0, 166, 81, 0.15); margin: 36px 0;">
+
+                    <h2>Delivered Business & Institutional Impact</h2>
+                    
+                    <h3>Before vs After Execution</h3>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Legacy Assessment Platforms</th>
+                                <th>DataMatrixAI Assessment Architecture</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Static test banks with predictable question patterns</td><td>Dynamic AI paper generation with zero-overlap algorithms</td></tr>
+                            <tr><td>Approximate or manual topic weighting</td><td>Algorithmic enforcement of official syllabus percentage quotas</td></tr>
+                            <tr><td>Delayed evaluation processing</td><td>Instantaneous scoring & real-time competency matrix generation</td></tr>
+                            <tr><td>Basic pass/fail output metrics</td><td>Deep-dive diagnostic analytics pinpointing specific topic gaps</td></tr>
+                            <tr><td>Manual exam assembly overhead</td><td>Automated blueprint-compliant paper rendering in seconds</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Key Quantified Benefits</h3>
+                    <div class="cs-grid-2">
+                        <div class="cs-card">
+                            <h4><i class="fas fa-bullseye" style="color:#10b981; margin-right:6px;"></i> 100% Blueprint Precision</h4>
+                            <p>Every generated exam paper perfectly matched official topic percentage quotas.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-server" style="color:#00A651; margin-right:6px;"></i> Zero Execution Downtime</h4>
+                            <p>100% platform stability and instant submission scoring across all live sessions.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-graduation-cap" style="color:#6ee7b7; margin-right:6px;"></i> Deep Diagnostic Clarity</h4>
+                            <p>Identifies micro-level learning gaps per candidate to optimize targeted faculty remediation.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-arrows-rotate" style="color:#a855f7; margin-right:6px;"></i> Eliminated Memory Bias</h4>
+                            <p>Zero-overlap paper compilation ensures true knowledge testing rather than memorization.</p>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0, 166, 81, 0.15); margin: 36px 0;">
+
+                    <h2>Platform Snapshot & Deployment Summary</h2>
+                    
+                    <div class="cs-grid-3">
+                        <div class="cs-feature-card"><i class="fas fa-brain"></i> <span>AI-powered dynamic synthesis</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-sliders"></i> <span>Strict blueprint weight enforcement</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-circle-notch"></i> <span>Zero-overlap item engine</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-chart-line"></i> <span>Real-time competency analytics</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-clock"></i> <span>Sub-second diagnostic evaluation</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-cloud"></i> <span>High-availability cloud delivery</span></div>
+                    </div>
+
+                    <h3>Deployment Overview</h3>
+                    <table class="compare-table">
+                        <tbody>
+                            <tr><td style="width: 30%;"><strong>Industry</strong></td><td>Higher Education / Professional Certifications</td></tr>
+                            <tr><td><strong>Solution</strong></td><td>Adaptive Examination & Competency Analytics Architecture</td></tr>
+                            <tr><td><strong>Platform</strong></td><td>DataMatrixAI Knowledge & Competency Engine</td></tr>
+                            <tr><td><strong>Deployment</strong></td><td>High-Availability Enterprise Cloud Architecture</td></tr>
+                            <tr><td><strong>Primary Users</strong></td><td>Academic Directors, Faculty, Certification Candidates</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="post-footer-nav" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <a href="lms.html" class="post-back-link" style="color: #00A651; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-arrow-left"></i> Back to Knowledge & Competency Platform
+                    </a>
+                </div>
+            </article>
+        </main>
+
+    </div>
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script src="js/case-studies-data.js?v=2.0.1"></script>
+    <script src="js/sidebar-render.js?v=2.0.1"></script>
+
+    <script>
+        if (typeof renderGlobalSidebar === 'function') {
+            renderGlobalSidebar();
+        }
+
+        window.addEventListener('scroll', () => {
+            const bar = document.getElementById('read-progress');
+            const article = document.querySelector('.post-article');
+            if (!bar || !article) return;
+            const articleTop = article.offsetTop;
+            const articleHeight = article.offsetHeight;
+            const scrolled = window.scrollY - articleTop;
+            const percent = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+            bar.style.width = percent + '%';
+        });
+    </script>
+
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataMatrixAI</title>
+    <meta name="description" content="Datamatrix AI builds enterprise-grade AI solutions including LLM platforms, conversational analytics, and AI strategy consulting to help businesses adopt AI responsibly.">
+    <link rel="canonical" href="https://melc.ai/">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="DataMatrixAI">
+    <meta property="og:description" content="Enterprise AI solutions and conversational analytics platform.">
+    <meta property="og:image" content="https://melc.ai/images/logo.png">
+    <meta property="og:url" content="https://melc.ai">
+    <meta property="og:type" content="website">
+    <meta name="author" content="DatamatrixAI">
+    <meta name="publisher" content="DatamatrixAI">
+
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/sections-new.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=2.0.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<script src="js/careers.js?v=2.0.1"></script>
+<script>
+(function(){
+const cv=document.getElementById('circuit-canvas');
+if(!cv) return;
+const cx=cv.getContext('2d');
+let W,H,dpr,scrollY=0;
+function rgb(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
+const B='#0057B8',O='#FF8C00',G='#00A651';
+let traces=[],joints=[],chips=[],pulses=[],boardH=0;
+function resize(){
+  const r=cv.getBoundingClientRect();
+  dpr=window.devicePixelRatio||1;
+  cv.width=r.width*dpr; cv.height=r.height*dpr;
+  W=r.width; H=r.height;
+  cx.setTransform(dpr,0,0,dpr,0,0);
+  build();
+}
+function rand(a,b){return a+Math.random()*(b-a);}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function build(){
+  traces=[];joints=[];chips=[];pulses=[];
+  boardH=H*3.5;
+  const cols=Math.floor(W/52)+2;
+  const rows=Math.floor(boardH/52)+2;
+  for(let row=0;row<rows;row++){
+    for(let col=0;col<cols;col++){
+      if(Math.random()>0.55) continue;
+      const x=col*52+rand(-8,8),y=row*52+rand(-8,8);
+      const dir=Math.random()>0.5?'h':'v';
+      const len=rand(30,120);
+      const col2=pick([B,B,B,B,G,O]);
+      const depth=rand(0.2,1.0);
+      traces.push({x,y,dir,len,col:col2,depth,phase:rand(0,Math.PI*2),speed:rand(0.005,0.018)});
+      joints.push({x,y,r:rand(2,5),col:col2,depth,phase:rand(0,Math.PI*2),speed:rand(0.01,0.025),glow:Math.random()>0.7});
+      if(dir==='h') joints.push({x:x+len,y,r:rand(2,5),col:col2,depth,phase:rand(0,Math.PI*2),speed:rand(0.01,0.025),glow:Math.random()>0.7});
+      else joints.push({x,y:y+len,r:rand(2,5),col:col2,depth,phase:rand(0,Math.PI*2),speed:rand(0.01,0.025),glow:Math.random()>0.7});
+    }
+  }
+  for(let i=0;i<14;i++){chips.push({x:rand(20,W-100),y:rand(80,boardH-80),w:rand(30,70),h:rand(20,50),col:pick([B,B,G]),depth:rand(0.3,1.0),phase:rand(0,Math.PI*2),speed:rand(0.003,0.008)});}
+}
+function spawnPulse(){
+  if(!traces.length) return;
+  const t=traces[Math.floor(Math.random()*traces.length)];
+  pulses.push({trace:t,t:0,speed:rand(0.006,0.018)});
+}
+setInterval(spawnPulse,280);
+function da(depth,base){return base*depth;}
+function drawSet(offsetY){
+  traces.forEach(t=>{
+    t.phase+=t.speed;
+    const y=t.y+offsetY;
+    if(y<-150||y>H+150) return;
+    const a=da(t.depth,0.18+0.06*Math.sin(t.phase));
+    cx.beginPath(); cx.moveTo(t.x,y);
+    if(t.dir==='h') cx.lineTo(t.x+t.len,y); else cx.lineTo(t.x,y+t.len);
+    cx.strokeStyle=rgb(t.col,a); cx.lineWidth=t.depth*1.5; cx.stroke();
+  });
+  chips.forEach(c=>{
+    c.phase+=c.speed;
+    const y=c.y+offsetY;
+    if(y<-100||y>H+100) return;
+    const a=da(c.depth,0.1+0.04*Math.sin(c.phase));
+    cx.strokeStyle=rgb(c.col,a); cx.lineWidth=c.depth;
+    cx.strokeRect(c.x,y,c.w,c.h);
+  });
+  joints.forEach(j=>{
+    j.phase+=j.speed;
+    const y=j.y+offsetY;
+    if(y<-50||y>H+50) return;
+    const pulse=0.5+0.5*Math.sin(j.phase);
+    const a=da(j.depth,j.glow?0.5+0.3*pulse:0.2+0.1*pulse);
+    const r=j.r*(j.glow?1+0.3*pulse:1);
+    if(j.glow&&j.depth>0.6){
+      cx.beginPath(); cx.arc(j.x,y,r*3.5,0,Math.PI*2);
+      cx.fillStyle=rgb(j.col,a*0.12); cx.fill();
+      cx.beginPath(); cx.arc(j.x,y,r*2,0,Math.PI*2);
+      cx.fillStyle=rgb(j.col,a*0.22); cx.fill();
+    }
+    cx.beginPath(); cx.arc(j.x,y,r,0,Math.PI*2);
+    cx.fillStyle=rgb(j.col,a); cx.fill();
+    cx.beginPath(); cx.arc(j.x,y,r*0.4,0,Math.PI*2);
+    cx.fillStyle=rgb('#ffffff',a*0.5); cx.fill();
+  });
+  for(let i=pulses.length-1;i>=0;i--){
+    const p=pulses[i]; p.t+=p.speed;
+    if(p.t>=1){pulses.splice(i,1);continue;}
+    const t=p.trace;
+    const py=t.y+offsetY;
+    if(py<-50||py>H+50) continue;
+    const ease=p.t<0.5?2*p.t*p.t:-1+(4-2*p.t)*p.t;
+    let px,ppy;
+    if(t.dir==='h'){px=t.x+t.len*ease;ppy=py;}else{px=t.x;ppy=py+t.len*ease;}
+    const a=da(t.depth,0.9);
+    cx.beginPath(); cx.arc(px,ppy,2.5*t.depth,0,Math.PI*2);
+    cx.fillStyle=rgb(t.col,a); cx.fill();
+    cx.beginPath(); cx.arc(px,ppy,6*t.depth,0,Math.PI*2);
+    cx.fillStyle=rgb(t.col,a*0.18); cx.fill();
+  }
+}
+function frame(){
+  scrollY+=0.5;
+  const oy=-(scrollY%boardH);
+  cx.fillStyle='#05070a'; cx.fillRect(0,0,W,H);
+  drawSet(oy);
+  if(oy>-(boardH-H*1.5)) drawSet(oy+boardH);
+  const g=cx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'rgba(5,7,10,0)');
+  g.addColorStop(0.6,'rgba(5,7,10,0)');
+  g.addColorStop(1,'rgba(5,7,10,0.85)');
+  cx.fillStyle=g; cx.fillRect(0,0,W,H);
+  requestAnimationFrame(frame);
+}
+window.addEventListener('resize',resize);
+resize(); frame();
+})();
+</script>
+<script src="js/contact.js?v=2.0.1"></script>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HEADER (unchanged)
+    ═══════════════════════════════════════════════════════ -->
+     <header>
+    <a href="index.html" class="logo-container">
+        <img src="assets/images/logo.png" alt="DataMatrix Logo" class="logo">
+        <div class="logo-text">
+            <span class="text-white">Datamatrix</span><span class="text-white">AI</span>
+            <div class="tagline-text">Make AI work. Responsibly</div>
+        </div>
+    </a>
+
+    <nav id="main-nav">
+        <ul class="nav-list">
+
+            <li><a href="index.html" class="nav-link" style="padding-right: 22px;">Home</a></li>
+
+            <li class="nav-item--dropdown">
+                <a href="#" class="nav-link nav-link--has-dropdown">
+                    Products <i class="fas fa-chevron-down nav-chevron"></i>
+                </a>
+                <ul class="nav-dropdown">
+                    <li>
+                        <a href="edis.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">EDIS</span>
+                            <span class="nav-dropdown__sub">Decision Intelligence Platform</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="lms.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">KNOWLEDGE AND COMPETENCY ENGINE</span>
+                            <span class="nav-dropdown__sub">Workforce Intelligence Journey</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item--dropdown">
+                <a href="#" class="nav-link nav-link--has-dropdown">
+                    Resources <i class="fas fa-chevron-down nav-chevron"></i>
+                </a>
+                <ul class="nav-dropdown">
+                    <li>
+                        <a href="blogs.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Blogs</span>
+                            <span class="nav-dropdown__sub">Thinking on enterprise AI</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="povs.html" class="nav-dropdown__link nav-dropdown__link--inactive">
+                            <span class="nav-dropdown__title">POVs</span>
+                            <span class="nav-dropdown__sub">Our points of view</span>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="case-studies.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Case Studies</span>
+                            <span class="nav-dropdown__sub">Real deployments, real results</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item--dropdown">
+                <a href="#" class="nav-link nav-link--has-dropdown">
+                    Company <i class="fas fa-chevron-down nav-chevron"></i>
+                </a>
+                <ul class="nav-dropdown">
+                    <li>
+                        <a href="about.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">About Us</span>
+                            <span class="nav-dropdown__sub">Who we are</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="founders.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Founders</span>
+                            <span class="nav-dropdown__sub">Meet the team</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="partnerships.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Partnerships</span>
+                            <span class="nav-dropdown__sub">STPI and beyond</span>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="nav-dropdown__link nav-dropdown__link--inactive">
+                            <span class="nav-dropdown__title">Accolades</span>
+                            <span class="nav-dropdown__sub">Coming soon</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-dropdown__link nav-dropdown__link--inactive">
+                            <span class="nav-dropdown__title">Gallery &amp; Events</span>
+                            <span class="nav-dropdown__sub">Coming soon</span>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="locations.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Office Locations</span>
+                            <span class="nav-dropdown__sub">Bangalore &amp; Bhubaneswar</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+    </button>
+
+    <a href="index.html#contact" class="btn-reach">Contact Us</a>
+</header>
+
+<section class="hero hero--fullbg" id="home">
+
+    <canvas id="circuit-canvas" class="hero-circuit-canvas"></canvas>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-center-content">
+    <h1 class="hero-title">
+        Built on AI. <span class="highlight">Delivered as Products.</span>
+    </h1>
+    <p class="hero-subtitle">
+        Engineering proprietary, production-ready AI products that give enterprises a real, measurable edge. Responsibly built and designed to scale.
+    </p>
+
+    <!-- Corporate Metric Hook -->
+    <div class="corporate-metric-hook">
+        <div class="metric-row">
+            <span class="metric-label">01. Purpose</span>
+            <h2 class="metric-text text--muted">Real problems.</h2>
+        </div>
+        <div class="metric-splitter"></div>
+        <div class="metric-row">
+            <span class="metric-label">02. Execution</span>
+            <h2 class="metric-text text--clear">Real products.</h2>
+        </div>
+        <div class="metric-splitter"></div>
+        <div class="metric-row">
+            <span class="metric-label">03. Outcome</span>
+            <h2 class="metric-text text--accent">Real ROI.</h2>
+        </div>
+    </div>
+</div>
+   <section class="body-copy-section">
+    <div class="corporate-pillars-container">
+        
+        <!-- Column 1: The Engineering/Sector Thesis -->
+        <div class="corporate-pillar">
+            <div class="pillar-header">
+                <span class="pillar-number">01</span>
+                <h3 class="pillar-title">Built for Real Enterprise Challenges</h3>
+            </div>
+            <p class="pillar-body">
+                Every DatamatrixAI product is born from real-world enterprise use cases — not the lab. We deeply study industry challenges across various sectors including electricity discoms, then engineer AI products that solve them with cost efficiency, scalability, and responsible AI principles at their core.
+            </p>
+        </div>
+
+        <!-- Vertical Separator Graphic -->
+        <div class="pillar-divider" aria-hidden="true"></div>
+
+        <!-- Column 2: The Integration/Customization Thesis -->
+        <div class="corporate-pillar">
+            <div class="pillar-header">
+                <span class="pillar-number">02</span>
+                <h3 class="pillar-title">Configured for Your Success</h3>
+            </div>
+            <p class="pillar-body">
+                Our products are never one-size-fits-all. We configure and customize each solution to fit your exact business needs, so your teams hit the ground running and start seeing returns faster than you expect.
+            </p>
+        </div>
+
+    </div>
+</section>
+     <section class="closing-pills-section">
+        <div class="closing-pills-row">
+
+            <div class="closing-pill">
+                <span class="closing-pill__icon"><i class="fas fa-building"></i></span>
+                <span class="closing-pill__label">On-Premise or Cloud</span>
+            </div>
+
+            <div class="closing-pill">
+                <span class="closing-pill__icon"><i class="fas fa-sliders-h"></i></span>
+                <span class="closing-pill__label">Tailored to Your Business</span>
+            </div>
+
+            <div class="closing-pill">
+                <span class="closing-pill__icon"><i class="fas fa-chart-line"></i></span>
+                <span class="closing-pill__label">Quicker ROI</span>
+            </div>
+
+        </div>
+    </section>
+</section>
+
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         6. PRODUCTS — existing (unchanged)
+    ═══════════════════════════════════════════════════════ -->
+    <section id="products" class="products-section">
+
+    <div class="section-header-product">
+        <h2 class="products-heading">Our Products</h2>
+        <p class="products-subheading">Proprietary AI built for enterprise-scale performance and security.</p>
+    </div>
+
+    <div class="product-featured">
+
+        <!-- Left: identity column -->
+        <div class="product-featured__left">
+            <div class="product-featured__icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="product-featured__name-block">
+                <h3 class="product-featured__name product-featured__name--short">EDIS</h3>
+                <p class="product-featured__fullname">Enterprise Data Orchestration and Cognitive Intelligence System</p>
+            </div>
+            <a href="edis.html" class="product-featured__cta">
+                Learn More <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="product-featured__divider"></div>
+
+        <!-- Right: content column -->
+        <div class="product-featured__right">
+            <span class="product-featured__label">Summary</span>
+            <p class="product-featured__desc">
+                EDIS is DatamatrixAI's proprietary Decision Intelligence Platform that deploys a semantic layer directly over your existing data infrastructure, enabling executives to extract precise, real-time intelligence through natural language — with zero data migration, zero disruption, and zero infrastructure change.
+            </p>
+
+            <!-- Three zero-promise pills -->
+            <div class="product-featured__pills">
+                <div class="product-pill">
+                    <i class="fas fa-database"></i>
+                    <span>Zero Data Migration</span>
+                </div>
+                <div class="product-pill">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>Zero Disruption</span>
+                </div>
+                <div class="product-pill">
+                    <i class="fas fa-server"></i>
+                    <span>Zero Infra Change</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="product-featured">
+
+        <!-- Left: identity column -->
+        <div class="product-featured__left">
+            <div class="product-featured__icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="product-featured__name-block">
+                <h3 class="product-featured__name product-featured__name--long">KNOWLEDGE & COMPETENCY ENGINE</h3>
+                <p class="product-featured__fullname">5-Step Workforce Intelligence Journey</p>
+            </div>
+            <a href="lms.html" class="product-featured__cta">
+                Learn More <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="product-featured__divider"></div>
+
+        <!-- Right: content column -->
+        <div class="product-featured__right">
+            <span class="product-featured__label">Summary</span>
+            <p class="product-featured__desc">
+                AI-powered intelligence that measures, develops and accelerates workforce capability — so your people and your business win
+            </p>
+
+            <!-- Three zero-promise pills -->
+            <div class="product-featured__pills">
+                <div class="product-pill">
+                    <i class="fas fa-database"></i>
+                    <span>Faster Onboarding</span>
+                </div>
+                <div class="product-pill">
+                    <i class="fas fa-shield-halved"></i>
+                    <span>Higher Retention</span>
+                </div>
+                <div class="product-pill">
+                    <i class="fas fa-server"></i>
+                    <span>Lower Training Cost</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         10. CONTACT — existing (unchanged)
+    ═══════════════════════════════════════════════════════ -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Reach Us Here</h2>
+
+            <div class="contact-wrapper">
+                <div class="form-column">
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Name" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="company" placeholder="Company" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Message" rows="5" required class="form-input"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="info-column">
+                    <div class="info-item">
+                        <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-text">
+                            <h4>Address</h4>
+                            <p>D-805 Purva Seasons, CV Raman Nagar, Bangalore 560093</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                        <div class="info-text">
+                            <h4>Email</h4>
+                            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f5f0f9fdfad4f0f5e0f5f9f5e0e6fdecf5fdbaf7fbbafdfa">[email&#160;protected]</a></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon-box"><i class="fas fa-phone-alt"></i></div>
+                        <div class="info-text">
+                            <h4>Phone</h4>
+                            <p>+91 7829440444</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icon-box"><i class="fas fa-clock"></i></div>
+                        <div class="info-text">
+                            <h4>Office Hours</h4>
+                            <p>Monday - Friday: <strong>9:00 AM - 6:00 PM</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         FOOTER — existing (unchanged)
+    ═══════════════════════════════════════════════════════ -->
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+  <!-- nav highlight on scroll + click -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll("nav ul li a");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.forEach(item => item.classList.remove("active"));
+                link.classList.add("active");
+            });
+        });
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute("id");
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // ─── ANTI-CASUAL INSPECTION DETERRENT ───
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) || 
+                (event.ctrlKey && (event.key === 'u' || event.key === 'U')) ||
+                (event.metaKey && event.altKey && event.key === 'i') ||
+                (event.ctrlKey && (event.key === 's' || event.key === 'S')) || 
+                (event.metaKey && (event.key === 's' || event.key === 'S'))
+            ) {
+                event.preventDefault();
+            }
+        });
+    });
+    </script>
+   <script>
+(function () {
+    const words = document.querySelectorAll('.hook-word');
+    if (!words.length) return;
+
+    // Use IntersectionObserver so it fires when hero is visible
+    // (covers both page load and if someone navigates back)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            // stagger each word by 200ms
+            words.forEach((word, i) => {
+                setTimeout(() => {
+                    word.classList.add('revealed');
+                }, 300 + i * 220);
+            });
+
+            observer.disconnect(); // only fire once
+        });
+    }, { threshold: 0.5 });
+
+    // observe the hook container
+    const hook = document.querySelector('.hook-inner-embedded');
+    if (hook) observer.observe(hook);
+})();
+</script>
+
+<script src="js/nav.js?v=2.0.1"></script>
+
+</body>
+</html>

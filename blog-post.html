@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Blog – DatamatrixAI</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <style>
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            background: rgba(0,10,30,0.95) !important;
+        }
+        #read-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(to right, #0057B8, #FF8C00);
+    z-index: 99999;
+    transition: width 0.1s linear;
+}
+
+/* Author avatar */
+.post-author-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.post-author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid rgba(0, 87, 184, 0.4);
+    background: rgba(0, 20, 55, 0.5);
+}
+
+.post-author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.post-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.post-author-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.post-author-role {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.4);
+}
+    </style>
+</head>
+<body>
+    <div id="read-progress"></div>
+    <!-- TWO-COLUMN LAYOUT: sidebar + post content -->
+    <div class="post-layout" id="postLayout">
+
+        <!-- LEFT SIDEBAR — all posts list -->
+        <aside class="post-sidebar" id="postSidebar">
+            <div class="sidebar-header">
+                <a href="blogs.html" class="sidebar-back">
+                    <i class="fas fa-arrow-left"></i> All Posts
+                </a>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Populated by JS -->
+            </nav>
+        </aside>
+
+        <!-- MAIN POST CONTENT -->
+        <main class="post-main" id="postMain">
+            <!-- Filled by JS based on ?id= in URL -->
+        </main>
+
+    </div>
+
+    <script>
+        /* ================================================
+           BLOG POST DATA
+           ================================================
+           To add a new post:
+           1. Add a new object to the `posts` array below
+           2. Give it the next sequential id
+           3. Add a matching entry in blogs.html allPosts array
+        ================================================ */
+
+        const posts = [
+            {
+                id: 1,
+                category: "Industry",
+                subcategoryLabel: "Power Discoms",
+                date: "July 2, 2026",
+                readTime: "2 min read",
+                author: "Radha Baran Mohanty",
+                authorRole: "Founder",
+                authorPhoto: "assets/images/radha.jpg", // Replace with actual author image path when available
+                title: "The Measurement Challenge Behind AT&C Loss Computation in India's Distribution Sector",
+                tags: ["Power Discoms", "AT&C Losses", "Grid Infrastructure", "RDSS"],
+                body: `
+                    <p>India's power distribution sector has made commendable progress over the past decade. AT&C losses have declined from 22.62% in FY 2013-14 to 15.04% in FY 2024-25, and the ACS-ARR gap has narrowed from ₹0.78/kWh to ₹0.06/kWh over the same period. Sustained policy interventions through DDUGJY, IPDS, UDAY, and RDSS have driven real and measurable improvements. As India pursues its clean energy ambitions, a well-performing distribution sector is central to that transition.</p>
+                    
+                    <p>At the same time, accurately computing AT&C losses is a genuinely complex undertaking. The reliability of the reported figure depends on an entire chain of measurement infrastructure, data systems, and operational processes. Understanding these challenges is important not to question what has been achieved, but to appreciate why ongoing investments in measurement infrastructure are so critical to the sector's future.</p>
+                    
+                    <h3>Understanding the AT&C Loss Metric</h3>
+                    <p>AT&C loss is essentially a function of two distinct efficiency ratios. Billing efficiency measures how much of the energy input into the distribution network is actually billed to consumers, expressed as the ratio of total units billed to total units input. Collection efficiency measures how much of the billed revenue is actually realized, expressed as the ratio of revenue collected to revenue billed.</p>
+                    
+                    <p>Together, these two ratios determine the overall AT&C loss, and a weakness in either one flows directly into the final figure. Since billing efficiency is an energy metric and collection efficiency is a monetary metric, accurate AT&C loss computation is dependent on the reliability of both the metering and billing infrastructure as well as the revenue accounting systems of the DISCOM, making it a more complex exercise than it might appear at first glance.</p>
+                    
+                    <h3>The Metering Chain and Where It Gets Difficult</h3>
+                    <p>Billing efficiency requires reliable measurement of both energy input and energy billed. Ideally, energy input should be measured from the bottom up, starting at each distribution transformer (DT), aggregating to the feeder, then substation, and finally to the DISCOM level. This granular approach makes losses geographically locatable and operationally actionable.</p>
+                    
+                    <p>In practice, most DISCOMs have relied on feeder-level calculations because DT-level metering has historically been incomplete. RDSS baseline surveys found that a significant proportion of DTs in several states either lacked a functioning energy meter or had one that was not being consistently read. Without reliable DT-level input data, a truly granular energy audit is not yet fully achievable across the network.</p>
+                    
+                    <h3>Consumer Indexing: A Structural Data Challenge</h3>
+                    <p>A significant but less visible challenge in billing efficiency computation is consumer indexing, which refers to the correct mapping of each consumer to their feeder, DT, meter, and tariff category in the billing system. In a network with millions of consumers, built up over decades and migrated from manual to digital records, maintaining accurate indexing at scale is genuinely difficult.</p>
+                    
+                    <p>When a consumer is mapped to the wrong DT, billed units get credited incorrectly, making one DT appear loss-heavy while another appears healthier than it actually is. Field teams guided by these figures may end up focusing on the wrong locations. GIS survey exercises under RDSS have revealed consumer indexing error rates of 15 to 30% in older distribution circles, and DISCOMs that completed reindexing have reported notable improvements in apparent billing efficiency without any change in physical infrastructure.</p>
+                    
+                    <h3>Other Contributing Factors</h3>
+                    <p>Unmetered or flat-rate billed agricultural connections, defective meters, extended reading cycles, and the temporal mismatch between feeder and consumer meter readings all introduce further noise into billing efficiency computation. On the collection efficiency side, delayed payments and pending arrears make the ratio sensitive to the accounting methodology applied.</p>
+                    
+                    <h3>The Path Forward</h3>
+                    <p>RDSS has directly addressed these challenges through 100% DT metering with communicating meters, GIS-based consumer indexing, and automated DT-level energy audit integrated with billing systems. As these systems are commissioned and stabilized, AT&C loss computations will rest on a progressively more granular and verifiable foundation. Recognizing the complexity of accurate AT&C loss computation is the first step toward building systems that make future figures more meaningful and actionable for the entire sector.</p>
+                `
+            }
+        ];
+
+        /* ================================================
+           RENDER ENGINE
+        ================================================ */
+        function getPostId() {
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'));
+        }
+
+        function renderSidebar(activeId) {
+            const nav = document.getElementById('sidebarNav');
+            nav.innerHTML = posts.map(p => `
+                <a href="blog-post.html?id=${p.id}"
+                   class="sidebar-item ${p.id === activeId ? 'active' : ''}">
+                    <span class="sidebar-item-title">${p.title}</span>
+                    <span class="sidebar-item-date">${p.date}</span>
+                </a>
+            `).join('');
+        }
+
+        function renderPost(post) {
+    document.getElementById('pageTitle').textContent = post.title + ' – DatamatrixAI';
+    renderSidebar(post.id);
+    document.getElementById('postMain').innerHTML = `
+        <article class="post-article">
+
+            <div class="post-header">
+                <div class="post-header-meta">
+                    <span class="blog-category-badge ${post.category.toLowerCase()}">${post.category}</span>
+                    <span class="post-meta-item"><i class="fas fa-calendar-alt"></i> ${post.date}</span>
+                    <span class="post-meta-item"><i class="fas fa-clock"></i> ${post.readTime}</span>
+                </div>
+                <h1 class="post-title">${post.title}</h1>
+
+                <!-- AUTHOR ROW WITH AVATAR -->
+                <div class="post-author-row">
+                    <div class="post-author-avatar">
+                        <img src="${post.authorPhoto}" alt="${post.author}">
+                    </div>
+                    <div class="post-author-info">
+                        <span class="post-author-name">${post.author}</span>
+                        <span class="post-author-role">${post.authorRole}</span>
+                    </div>
+                </div>
+
+                <div class="blog-tags" style="margin-top: 1rem;">
+                    ${post.tags.map(t => `<span class="blog-tag">${t}</span>`).join('')}
+                </div>
+            </div>
+
+            <div class="post-body">
+                ${post.body}
+            </div>
+
+            <div class="post-footer-nav">
+                <a href="blogs.html" class="post-back-link">
+                    <i class="fas fa-arrow-left"></i> Back to all posts
+                </a>
+            </div>
+        </article>
+    `;
+
+    // start progress bar after post renders
+    initProgressBar();
+}
+
+        function renderNotFound() {
+            renderSidebar(-1);
+            document.getElementById('postMain').innerHTML = `
+                <div class="post-not-found">
+                    <i class="fas fa-file-circle-question"></i>
+                    <h2>Post not found</h2>
+                    <p>This post may have moved or been removed.</p>
+                    <a href="blogs.html" class="blog-read-btn" style="display:inline-flex; margin-top: 1.5rem;">
+                        <i class="fas fa-arrow-left"></i> Back to all posts
+                    </a>
+                </div>
+            `;
+        }
+
+        const id = getPostId();
+        const post = posts.find(p => p.id === id);
+        post ? renderPost(post) : renderNotFound();
+
+        function initProgressBar() {
+    const bar = document.getElementById('read-progress');
+    const article = document.querySelector('.post-article');
+    if (!bar || !article) return;
+
+    window.addEventListener('scroll', () => {
+        const articleTop = article.offsetTop;
+        const articleHeight = article.offsetHeight;
+        const scrolled = window.scrollY - articleTop;
+        const percent = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+        bar.style.width = percent + '%';
+    });
+}
+    </script>
+<script src="js/footer-loader.js?v=2.0.1"></script>
+<script src="js/nav-inject.js?v=2.0.1"></script>
+<script src="js/nav.js?v=2.0.1"></script>   
+</body>
+</html>

@@ -1,0 +1,700 @@
+
+/* ============================================
+   FONTS — Import distinctive display + body pair
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ============================================
+   HERO — FULL BACKGROUND VERSION
+   ============================================ */
+.hero--fullbg {
+    position: relative;
+    max-height: 140vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px;        /* ← only this, nothing else fighting it */
+    padding-bottom: 0;
+    margin-top: 0;
+    overflow: hidden;
+    background: linear-gradient(
+        to bottom,
+        rgba(5, 7, 10, 0.90) 0%,
+        rgba(5, 7, 10, 0.50) 30%,
+        rgba(5, 7, 10, 0.45) 65%,
+        rgba(5, 7, 10, 0.90) 100%
+    );
+}
+.hero-center-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding-bottom: 0;
+    overflow: hidden;
+    padding-top: 0px !important; /* reduce from whatever it is, or add if missing */
+    padding-bottom: 0 !important;
+}
+
+.hero--fullbg .hero-title {
+    font-family: 'Syne', sans-serif;
+font-size: 3rem !important;   
+ line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
+
+.hero--fullbg .hero-title .highlight {
+    color: #FF8C00;
+        white-space: nowrap;
+            text-shadow: none;
+
+}
+
+/* subtitle */
+.hero--fullbg .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.5rem, 2vw, 1.0rem) !important;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+/* ── embedded hook ── */
+.hook-inner-embedded {
+    margin-top: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    backdrop-filter: none;
+    border: none;
+}
+
+.hook-text-embedded {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(5, 7, 10, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
+    padding: 10px 10px 10px 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.85rem, 1.4vw, 2.05rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.hook-highlight-embedded {
+    color: 	#00A651;
+    text-shadow: 0 0 30px rgba(255, 140, 0, 0.45);
+    position: relative;
+    white-space: nowrap;
+        font-size: clamp(1.85rem, 1.4vw, 2.05rem);
+}
+
+/* animated underline on "Real ROI." */
+.hook-highlight-embedded::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #FF8C00, #00A651);
+    border-radius: 2px;
+}
+
+/* ── split reveal ── */
+.hook-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    color: rgba(255, 255, 255, 0.55);
+    margin-right: 0.3em;
+}
+
+.hook-word.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hook-word--roi {
+    color: #ffffff;
+    margin-right: 0;
+    background: linear-gradient(135deg, #FF8C00, #e07000);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: clamp(1.85rem, 1.4vw, 2.05rem);
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    text-shadow: none;
+}
+
+.hook-word--roi.revealed {
+    animation: roiFlash 1s ease forwards;
+}
+
+@keyframes roiFlash {
+    0%   {
+        opacity: 0;
+        transform: translateY(8px);
+        box-shadow: 0 0 0px rgba(255, 140, 0, 0);
+    }
+    40%  {
+        opacity: 1;
+        transform: translateY(0);
+        box-shadow: 0 0 50px rgba(255, 140, 0, 0.9),
+                    0 0 100px rgba(255, 140, 0, 0.4);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.35),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+}
+/* ── responsive ── */
+@media (max-width: 768px) {
+    .hook-inner-embedded { padding: 20px 24px; }
+    .hook-inner-embedded::before,
+    .hook-inner-embedded::after { display: none; }
+}
+
+/* ============================================
+   BODY COPY SECTION
+   ============================================ */
+/* ── Body Copy Section Wrapper ── */
+.body-copy-section {
+    background: transparent;
+    margin-top: 20px; /* Generous spacing below your ROI header component */
+    margin-left:70px;
+    padding: 25px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-width:1000px;
+}
+
+/* ── The Pillars Grid Container ── */
+.corporate-pillars-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    max-width: 1100px;
+    width: 100%;
+    gap: 48px;
+}
+
+/* ── Individual Feature Pillars ── */
+.corporate-pillar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Left-aligned content is the standard for scannable corporate reports */
+}
+
+/* ── Pillar Meta Headers ── */
+.pillar-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 16px;
+}
+
+.pillar-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FF8C00; /* Subtle tie-in to your primary action color */
+    letter-spacing: 0.05em;
+}
+
+.pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* ── Pillar Body Copy Typography ── */
+.pillar-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+    font-weight: 400;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.65); /* Elegant, readable off-white */
+    margin: 0;
+    letter-spacing: -0.005em;
+}
+
+/* ── Minimalist Architectural Divider ── */
+.pillar-divider {
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0.15) 80%,
+        rgba(255, 255, 255, 0) 100*
+    );
+    align-self: stretch;
+}
+
+/* ── Responsive Architecture for Mobile Devices ── */
+@media (max-width: 868px) {
+    .body-copy-section {
+        margin-top: 50px;
+        padding: 20px;
+    }
+
+    .corporate-pillars-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .pillar-divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+    }
+    
+    .pillar-header {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+    }
+}
+
+/* ============================================
+   PRODUCTS — single featured product layout
+   ============================================ */
+.products-heading {
+    font-family: 'Syne', sans-serif;
+   font-size: clamp(1.3rem, 3.5vw, 2.1rem) !important;    
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+}
+
+.products-subheading {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-bottom: 56px;
+}
+
+/* Featured card — two column layout */
+.product-featured {
+    display: flex;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 48px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    
+    /* ADD OR UPDATE THIS MATCHING LINE FOR BALANCED SPACING */
+    gap: 40px !important;
+}
+
+.product-featured:hover {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 140, 0, 0.12);
+}
+
+/* Left column */
+.product-featured__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    /* ADD/OVERRIDE THESE THREE LINES TO LOCK THE BOX WIDTH */
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    max-width: 320px !important;
+}
+
+/* Add this block directly below it to force the container text to wrap */
+.product-featured__name-block {
+    width: 100% !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+}
+
+.product-featured__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(0, 87, 184, 0.3), rgba(0, 87, 184, 0.1));
+    border: 1px solid rgba(0, 87, 184, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #FF8C00;
+}
+
+.product-featured__name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    line-height: 1.25 !important;
+    margin: 0 0 8px 0;
+    display: block !important; /* Forces layout tracking within boundaries */
+}
+
+/* Sizing logic for short text strings */
+.product-featured__name--short {
+    font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+}
+
+/* Intelligent size restriction for long multi-word strings */
+.product-featured__name--long {
+    font-size: clamp(1.35rem, 1.8vw, 1.6rem) !important;
+    letter-spacing: -0.03em !important;
+}
+
+.product-featured__fullname {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.5;
+    max-width: 200px;
+    letter-spacing: 0.01em;
+}
+
+.product-featured__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #FF8C00;
+    text-decoration: none;
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    border-radius: 100px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.product-featured__cta:hover {
+    background: rgba(255, 140, 0, 0.1);
+    gap: 12px;
+}
+
+/* Vertical divider */
+.product-featured__divider {
+    width: 1px;
+    background: linear-gradient(to bottom,
+        transparent,
+        rgba(0, 87, 184, 0.3) 20%,
+        rgba(0, 87, 184, 0.3) 80%,
+        transparent
+    );
+    flex-shrink: 0;
+}
+
+/* Right column */
+.product-featured__right {
+    flex: 1;
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.product-featured__label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #FF8C00;
+}
+
+.product-featured__desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+}
+
+/* Zero-promise pills */
+.product-featured__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.product-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(0, 166, 81, 0.07);
+    border: 1px solid rgba(0, 166, 81, 0.25);
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #00A651;
+    transition: all 0.3s ease;
+}
+
+.product-pill i {
+    font-size: 0.75rem;
+    color: #00A651;
+}
+
+.product-pill:hover {
+    background: rgba(0, 166, 81, 0.14);
+    border-color: #00A651;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-featured {
+        flex-direction: column;
+    }
+    .product-featured__divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right,
+            transparent,
+            rgba(0, 87, 184, 0.3) 20%,
+            rgba(0, 87, 184, 0.3) 80%,
+            transparent
+        );
+    }
+    .product-featured__left {
+        padding: 36px 28px;
+    }
+    .product-featured__right {
+        padding: 36px 28px;
+    }
+}
+
+
+
+/* ============================================
+   CLOSING PILLS ROW
+   ============================================ */
+.closing-pills-section {
+    padding: 60px 5% 80px;
+    background:transparent;
+}
+
+.closing-pills-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.closing-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 20, 55, 0.5);
+    border: 1px solid rgba(0, 87, 184, 0.2);
+    border-radius: 100px;
+    padding: 14px 28px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.closing-pill:hover {
+    border-color: #FF8C00;
+    background: rgba(255, 140, 0, 0.06);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.closing-pill__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 87, 184, 0.15);
+    border: 1px solid rgba(0, 87, 184, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #FF8C00;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+}
+
+.closing-pill:hover .closing-pill__icon {
+    background: rgba(255, 140, 0, 0.15);
+    border-color: rgba(255, 140, 0, 0.3);
+}
+
+.closing-pill__label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+/* Separator dots between pills on desktop */
+.closing-pill + .closing-pill::before {
+    display: none; /* Using gap instead */
+}
+
+@media (max-width: 640px) {
+    .closing-pills-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .closing-pill {
+        justify-content: center;
+    }
+    .closing-pill__label {
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* experiment w gemini */
+
+/* ── Corporate Metric Container ── */
+.corporate-metric-hook {
+    margin-top: 30px;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px 40px;
+    gap: 40px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Individual Data Blocks */
+.metric-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+/* Elegant Micro-Labels */
+.metric-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+
+/* Premium Typography Headings */
+.metric-text {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin: 0;
+}
+
+/* ── Corporate Color Hierarchy ── */
+
+/* Muted Industrial tone for Phase 1 */
+.text--muted {
+    color: #4A4A4A;
+}
+
+/* Stark pristine silver-white for Phase 2 */
+.text--clear {
+    color:  #0056B3;
+}
+
+/* High-contrast Enterprise Orange for Phase 3 (The Punchline) */
+.text--accent {
+    background: #28A745;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Clean Architectural Dividers */
+.metric-splitter {
+    width: 1px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    align-self: center;
+}
+
+/* ── Responsive Architecture for Corporate Mobile ── */
+@media (max-width: 768px) {
+    .corporate-metric-hook {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 24px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .metric-row {
+        align-items: center;
+        text-align: center;
+    }
+
+    .metric-splitter {
+        width: 100%;
+        height: 1px;
+    }
+}
+

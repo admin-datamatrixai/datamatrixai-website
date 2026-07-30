@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Case Study – DatamatrixAI</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <style>
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            background: rgba(0,10,30,0.95) !important;
+        }
+        #read-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(to right, #0057B8, #FF8C00);
+            z-index: 99999;
+            transition: width 0.1s linear;
+        }
+
+        /* ============================================================
+           TYPOGRAPHY & HIERARCHY
+           ============================================================ */
+        .post-article {
+            font-family: 'Inter', sans-serif;
+            color: #d1d5db; /* Soft neutral gray for body copy readability */
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Article Main Title */
+        .post-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-top: 12px;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        /* Section Header (H2) */
+        .post-body h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 48px;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(0, 87, 184, 0.4);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Sub-header (H3) */
+        .post-body h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: #93c5fd; /* Soft blue focus color for subheaders */
+            margin-top: 32px;
+            margin-bottom: 14px;
+            letter-spacing: 0.01em;
+        }
+
+        /* Sub-card Header (H4) */
+        .post-body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Body Paragraphs */
+        .post-body p {
+            margin-bottom: 18px;
+            font-weight: 400;
+        }
+
+        .post-body strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* ============================================================
+           SIDEBAR STYLING
+           ============================================================ */
+        .sidebar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+            margin-bottom: 8px;
+            background: rgba(0, 20, 55, 0.2);
+        }
+        .sidebar-item:hover {
+            background: rgba(0, 87, 184, 0.15);
+            color: #ffffff;
+        }
+        .sidebar-item.active {
+            background: rgba(0, 87, 184, 0.25);
+            border-left-color: #FF8C00;
+            color: #ffffff;
+        }
+        .sidebar-item-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            line-height: 1.35;
+        }
+        .sidebar-item-date {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ============================================================
+           WORKFLOW, CARDS & FEATURE ITEMS
+           ============================================================ */
+        .wf-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 24px 0;
+            background: rgba(0, 31, 80, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 87, 184, 0.3);
+        }
+        .wf-step {
+            background: rgba(0, 20, 55, 0.6);
+            border: 1px solid rgba(0, 87, 184, 0.4);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #fff;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .wf-arrow {
+            color: #FF8C00;
+            font-size: 0.9rem;
+        }
+
+        /* Grid Layouts */
+        .cs-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0; }
+        .cs-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+        
+        .cs-card {
+            background: rgba(0, 20, 60, 0.4);
+            border: 1px solid rgba(0, 87, 184, 0.25);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .cs-card p { font-size: 0.88rem; color: #9ca3af; margin: 0; line-height: 1.6; }
+
+        /* Unified Feature Snapshot Card Styling */
+        .cs-feature-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(0, 20, 60, 0.4);
+            border: 1px solid rgba(0, 87, 184, 0.25);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #e5e7eb;
+            line-height: 1.4;
+        }
+        .cs-feature-card i {
+            color: #FF8C00;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: linear-gradient(135deg, rgba(0, 31, 80, 0.4) 0%, rgba(5, 7, 10, 0.8) 100%);
+            border: 1px solid rgba(255, 140, 0, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+        .profile-item label { display: block; font-size: 0.72rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .profile-item span { font-size: 1.05rem; font-weight: 600; color: #fff; }
+        .profile-item .high-risk { color: #ef4444; }
+
+        /* Tables */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.88rem;
+        }
+        .compare-table th, .compare-table td {
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 87, 184, 0.2);
+            text-align: left;
+        }
+        .compare-table th { background: rgba(0, 87, 184, 0.2); color: #fff; font-family: 'Outfit', sans-serif; font-weight: 600; }
+        .compare-table td { background: rgba(0, 20, 55, 0.2); color: #d1d5db; }
+
+        /* Icon Lists */
+        .icon-list { list-style: none; padding: 0; margin: 16px 0; }
+        .icon-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; font-size: 0.92rem; color: #e5e7eb; line-height: 1.5; }
+        .icon-list li i { color: #FF8C00; font-size: 1rem; width: 20px; margin-top: 3px; text-align: center; flex-shrink: 0; }
+        .icon-list.check-list li i { color: #10b981; }
+
+        /* Dashboard UI */
+        .mock-dashboard {
+            background: #080e18;
+            border: 1px solid rgba(0, 87, 184, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 28px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 87, 184, 0.25);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .dash-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dash-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+        .dash-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .kpi-card {
+            background: rgba(0, 20, 55, 0.5);
+            border: 1px solid rgba(0, 87, 184, 0.2);
+            padding: 10px 14px;
+            border-radius: 8px;
+        }
+        .kpi-label { font-size: 0.7rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.03em; }
+        .kpi-val { font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 4px; }
+        .dash-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+        .chart-box {
+            background: rgba(0, 15, 40, 0.6);
+            border: 1px solid rgba(0, 87, 184, 0.2);
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .box-title { font-size: 0.78rem; font-weight: 600; color: #d1d5db; margin-bottom: 10px; }
+        .table-box {
+            background: rgba(0, 15, 40, 0.6);
+            border: 1px solid rgba(0, 87, 184, 0.2);
+            border-radius: 8px;
+            padding: 14px;
+        }
+        .dash-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        .dash-table th { text-align: left; color: #9ca3af; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500; }
+        .dash-table td { padding: 8px 0; color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .status-critical { color: #ef4444; font-weight: 600; }
+        .status-medium { color: #f59e0b; font-weight: 600; }
+
+        /* ============================================================
+           EDIS CONTROL CENTER SCREENSHOT GALLERY
+           ============================================================ */
+        .edis-gallery-container {
+            background: rgba(8, 14, 24, 0.7);
+            border: 1px solid rgba(0, 87, 184, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 28px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .edis-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 87, 184, 0.25);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+        .edis-gallery-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .edis-gallery-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .edis-screenshot-card {
+            background: rgba(0, 20, 55, 0.5);
+            border: 1px solid rgba(0, 87, 184, 0.25);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .edis-screenshot-card:hover {
+            border-color: rgba(255, 140, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        .edis-screenshot-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid rgba(0, 87, 184, 0.2);
+        }
+        .edis-screenshot-caption {
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            background: rgba(0, 10, 30, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .edis-screenshot-caption i {
+            color: #FF8C00;
+        }
+
+        @media (max-width: 768px) {
+            .dash-body { grid-template-columns: 1fr; }
+            .post-title { font-size: 1.75rem; }
+            .post-body h2 { font-size: 1.3rem; margin-top: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="read-progress"></div>
+
+    <div class="post-layout" id="postLayout">
+
+        <!-- LEFT SIDEBAR — Dynamic Case Studies List -->
+        <aside class="post-sidebar" id="postSidebar">
+            <div class="sidebar-header">
+                <a href="case-studies.html" class="sidebar-back">
+                    <i class="fas fa-arrow-left"></i> All Case Studies
+                </a>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Populated dynamically by JS -->
+            </nav>
+        </aside>
+
+        <!-- MAIN POST CONTENT -->
+        <!-- MAIN POST CONTENT (Static HTML) -->
+        <main class="post-main" id="postMain">
+            <article class="post-article">
+                <div class="post-header">
+                    <div class="post-header-meta">
+                        <span class="blog-category-badge power-discoms">Power Discoms</span>
+                        <span class="post-meta-item"><i class="fas fa-calendar-alt"></i> Feb 2026</span>
+                        <span class="post-meta-item"><i class="fas fa-clock"></i> Case Study</span>
+                    </div>
+                    <h1 class="post-title">EDIS Fraud Analytics: AI-Driven Revenue Protection for Power Discoms</h1>
+                    <div class="blog-tags" style="margin-top: 1rem;">
+                        <span class="blog-tag">Power Discoms</span>
+                        <span class="blog-tag">EDIS</span>
+                        <span class="blog-tag">Revenue Protection</span>
+                        <span class="blog-tag">Fraud Detection</span>
+                    </div>
+                </div>
+
+                <div class="post-body">
+                    <!-- Paste your full EDIS static body content here -->
+                    <h2>The Business Challenge</h2>
+                    <p>Power discoms generate millions of billing and consumption records every month. Hidden within this vast volume of data are abnormal consumption patterns, meter tampering, billing irregularities, and electricity theft that directly impact revenue.</p>
+                    <p>Traditional investigation methods rely heavily on manual analysis and field experience, making fraud detection reactive, inconsistent, and resource-intensive. As a result, suspicious consumers often remain undetected for months, leading to significant revenue leakage and delayed corrective action.</p>
+
+                    <h3>Critical Operational Challenges</h3>
+                    <ul class="icon-list">
+                        <li><i class="fas fa-arrow-trend-down"></i> <span>Revenue leakage due to undetected electricity theft</span></li>
+                        <li><i class="fas fa-chart-pie"></i> <span>Difficulty analyzing millions of consumer records</span></li>
+                        <li><i class="fas fa-hourglass-half"></i> <span>Slow manual investigations</span></li>
+                        <li><i class="fas fa-map-pin"></i> <span>No prioritization of high-risk consumers</span></li>
+                        <li><i class="fas fa-chart-line"></i> <span>Consumption anomalies hidden in historical data</span></li>
+                        <li><i class="fas fa-triangle-exclamation"></i> <span>Delayed fraud detection and response</span></li>
+                    </ul>
+
+                    <h3>Traditional Investigation Workflow</h3>
+                    <div class="wf-horizontal">
+                        <div class="wf-step">Billing Data</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Excel Reports</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Manual Analysis</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Random Field Inspection</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Fraud Identified</div>
+                        <i class="fas fa-chevron-right wf-arrow"></i>
+                        <div class="wf-step">Revenue Recovery</div>
+                    </div>
+                    <blockquote style="margin-top: -12px; font-size: 0.85rem; color: #9ca3af; margin-bottom: 24px;">
+                        <em>Characteristics: Reactive • Time-consuming • Limited Coverage</em>
+                    </blockquote>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0,87,184,0.15); margin: 36px 0;">
+
+                    <h2>The EDIS Fraud Analytics Solution</h2>
+                    <p><strong>Proven AI-Driven Revenue Protection:</strong> By analyzing massive volumes of consumer billing, consumption, and operational data, EDIS empowers power discoms to proactively identify suspicious behavior and stop revenue loss at the source.</p>
+                    <p>Through real-world field deployments across DISCOM networks, the platform evaluates historical trends, peer behavior, seasonal variations, and multi-factor risk metrics to deliver explainable, actionable intelligence to revenue recovery teams.</p>
+
+                    <h3>Data Convergence into EDIS Engine</h3>
+                    <div class="cs-grid-2">
+                        <div class="cs-card">
+                            <h4>Data Sources Analyzed</h4>
+                            <ul class="icon-list" style="margin-bottom:0;">
+                                <li><i class="fas fa-file-invoice-dollar"></i> <span>Billing System Data</span></li>
+                                <li><i class="fas fa-users-gear"></i> <span>Consumer Master Records</span></li>
+                                <li><i class="fas fa-gauge-high"></i> <span>Meter Readings & Intervals</span></li>
+                                <li><i class="fas fa-clipboard-check"></i> <span>Vigilance Inspection Logs</span></li>
+                                <li><i class="fas fa-database"></i> <span>Multi-Year Historical Trends</span></li>
+                            </ul>
+                        </div>
+                        <div class="cs-card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                            <i class="fas fa-microchip" style="font-size: 2.8rem; color: #0057B8; margin-bottom: 12px;"></i>
+                            <h4>EDIS Analytics Engine</h4>
+                            <p>Processes complex stream data to generate precise risk scoring and field-verifiable fraud alerts.</p>
+                        </div>
+                    </div>
+
+                    <h3>End-to-End Fraud Analytics Workflow</h3>
+                    <div class="wf-horizontal" style="flex-wrap: wrap;">
+                        <div class="wf-step">Data Ingestion</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Data Validation</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Consumption Analytics</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Pattern Recognition</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">AI Risk Scoring</div>
+                    </div>
+                    <div class="wf-horizontal" style="flex-wrap: wrap; margin-top: -12px;">
+                        <div class="wf-step">Fraud Detection</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Priority Queue</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Field Verification</div>
+                        <i class="fas fa-arrow-right wf-arrow"></i>
+                        <div class="wf-step">Revenue Recovery</div>
+                    </div>
+
+                    <h3>Core Capabilities Executed in the Field</h3>
+                    <div class="cs-grid-3">
+                        <div class="cs-card">
+                            <h4>Consumption Analysis</h4>
+                            <p>Detects sudden and uncharacteristic drops in energy consumption.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Behavioral Profiling</h4>
+                            <p>Learns baseline consumer usage patterns dynamically over time.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Peer Comparison</h4>
+                            <p>Compares target accounts against similar profiles within the same transformer node.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Dynamic Risk Scoring</h4>
+                            <p>Ranks consumers by probability of fraud to optimize field inspection teams.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Explainable AI Insights</h4>
+                            <p>Delivers specific evidence trails behind every flagged account for vigilance officers.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4>Continuous Audit</h4>
+                            <p>Monitors each billing cycle automatically, capturing emerging anomalies immediately.</p>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0,87,184,0.15); margin: 36px 0;">
+
+                    <h2>Field Investigation Case Study</h2>
+                    <p>The following case highlights how EDIS successfully pinpointed high-probability revenue leakage during active DISCOM deployment, leading to targeted field verification and successful recovery.</p>
+
+                    <div class="profile-card">
+                        <h4 style="margin-bottom: 16px; color: #FF8C00;">Consumer Risk Assessment Profile (Field Execution)</h4>
+                        <div class="profile-grid">
+                            <div class="profile-item"><label>Consumer Category</label><span>Commercial</span></div>
+                            <div class="profile-item"><label>Monthly Average</label><span>8,750 kWh</span></div>
+                            <div class="profile-item"><label>Flagged Consumption</label><span>1,120 kWh</span></div>
+                            <div class="profile-item"><label>Peer Group Avg</label><span>8,900 kWh</span></div>
+                            <div class="profile-item"><label>Historical Trend</label><span>Stable</span></div>
+                            <div class="profile-item"><label>Assessed Risk Score</label><span class="high-risk">97 / 100</span></div>
+                        </div>
+                    </div>
+
+                    <h3>AI Findings & Field Verification Results</h3>
+                    <ul class="icon-list check-list">
+                        <li><i class="fas fa-circle-check"></i> <span>Identified 87% unexplained reduction in billed consumption</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Ruled out seasonal/operational downtime through climate & peer correlation</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Neighboring commercial units showed consistent energy draw</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>High confidence fraud alert dispatched directly to field inspection queue</span></li>
+                        <li><i class="fas fa-circle-check"></i> <span>Verified meter bypass upon site inspection and initiated penalty billing</span></li>
+                    </ul>
+                    <div style="background: rgba(16, 185, 129, 0.12); border-left: 4px solid #10b981; padding: 14px 18px; margin: 20px 0; border-radius: 0 8px 8px 0; color: #e5e7eb;">
+                        <strong style="color: #10b981;">Outcome:</strong> Successful field verification, direct identification of revenue loss, and immediate penalty assessment.
+                    </div>
+
+                    <!-- <h3>EDIS Operational Control Center</h3>
+                    <div class="mock-dashboard">
+                        <div class="dash-header">
+                            <div class="dash-title">
+                                <i class="fas fa-chart-line" style="color: #FF8C00;"></i> EDIS Intelligence Hub — Revenue Assurance
+                            </div>
+                            <span class="dash-badge"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> System Active</span>
+                        </div>
+
+                        <div class="dash-kpis">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Analyzed Meters</div>
+                                <div class="kpi-val">1.28M</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">High Risk Flagged</div>
+                                <div class="kpi-val" style="color: #ef4444;">1,420</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Protected Revenue</div>
+                                <div class="kpi-val" style="color: #10b981;">₹ 8.4 Cr</div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-label">Inspection Hit Rate</div>
+                                <div class="kpi-val" style="color: #FF8C00;">84.2%</div>
+                            </div>
+                        </div>
+
+                        <div class="dash-body">
+                            <div class="chart-box">
+                                <div class="box-title"><i class="fas fa-wave-square" style="color: #0057B8;"></i> Consumption Anomaly Detection vs Peer Baseline</div>
+                                <svg viewBox="0 0 400 130" style="width: 100%; height: auto; overflow: visible;">
+                                    <line x1="0" y1="30" x2="400" y2="30" stroke="rgba(255,255,255,0.05)" />
+                                    <line x1="0" y1="70" x2="400" y2="70" stroke="rgba(255,255,255,0.05)" />
+                                    <line x1="0" y1="110" x2="400" y2="110" stroke="rgba(255,255,255,0.05)" />
+                                    <path d="M0,45 Q100,40 200,50 T400,45" fill="none" stroke="#0057B8" stroke-width="2" stroke-dasharray="4,4" />
+                                    <path d="M0,48 Q80,45 160,48 T240,110 T400,112" fill="none" stroke="#FF8C00" stroke-width="2.5" />
+                                    <circle cx="240" cy="110" r="5" fill="#ef4444" />
+                                    <text x="250" y="105" fill="#ef4444" font-size="9" font-weight="600">87% Sudden Drop</text>
+                                </svg>
+                                <div style="display: flex; gap: 16px; font-size: 0.7rem; color: #9ca3af; margin-top: 8px;">
+                                    <span><i class="fas fa-minus" style="color: #0057B8;"></i> Peer Group Avg</span>
+                                    <span><i class="fas fa-minus" style="color: #FF8C00;"></i> Consumer Consumption</span>
+                                </div>
+                            </div>
+
+                            <div class="table-box">
+                                <div class="box-title"><i class="fas fa-triangle-exclamation" style="color: #ef4444;"></i> High Priority Queue</div>
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Consumer ID</th>
+                                            <th>Risk Score</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#IND-9082</td>
+                                            <td class="status-critical">97 / 100</td>
+                                            <td><span style="background: rgba(239,68,68,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#ef4444;">Flagged</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#COM-4412</td>
+                                            <td class="status-critical">93 / 100</td>
+                                            <td><span style="background: rgba(239,68,68,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#ef4444;">Dispatch</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>#RES-1109</td>
+                                            <td class="status-medium">81 / 100</td>
+                                            <td><span style="background: rgba(245,158,11,0.2); padding:2px 6px; border-radius:4px; font-size:0.65rem; color:#f59e0b;">Review</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <h3>EDIS Operational Control Center</h3>
+                    <div class="edis-gallery-container">
+                        <div class="edis-gallery-header">
+                            <div class="edis-gallery-title">
+                                <i class="fas fa-desktop" style="color: #FF8C00;"></i> EDIS Live Platform Interface & Control Center
+                            </div>
+                            <span class="dash-badge"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Active System Deployment</span>
+                        </div>
+
+                        <div class="edis-gallery-grid">
+                            <!-- Screenshot 1: Parameter Configuration -->
+                            <div class="edis-screenshot-card">
+                                <img src="assets/images/EDIS-CS-SS-01.png" alt="EDIS Configuration & Execution Hub">
+                                <div class="edis-screenshot-caption">
+                                    <i class="fas fa-sliders"></i>
+                                    <span><strong>Configuration & Execution Hub:</strong> Outlier detection sensitivity, parameter controls, and execution workflows.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 2: Key Metrics Summary -->
+                            <div class="edis-screenshot-card">
+                                <img src="assets/images/EDIS-CS-SS-02.png" alt="EDIS Structured Data Analysis & Key Metrics">
+                                <div class="edis-screenshot-caption">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span><strong>Structured Data Analysis:</strong> Executive KPI cards showcasing consumer breakdown, outlier rates, chronic drops, and spikes.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 3: Distribution Analytics -->
+                            <div class="edis-screenshot-card">
+                                <img src="assets/images/EDIS-CS-SS-03.png" alt="EDIS Distribution by Tariff Category & Division">
+                                <div class="edis-screenshot-caption">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span><strong>Geographic & Category Distribution:</strong> Anomaly distribution categorized across tariff plans and discom operating divisions.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 4: Outlier Type Breakdown -->
+                            <div class="edis-screenshot-card">
+                                <img src="assets/images/EDIS-CS-SS-04.png" alt="EDIS Outlier Type Breakdown">
+                                <div class="edis-screenshot-caption">
+                                    <i class="fas fa-list-check"></i>
+                                    <span><strong>Outlier Breakdown:</strong> Detailed analytics on chronic spikes, volatile usage patterns, and top division hotspots.</span>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 5: AI Insights & Reporting -->
+                            <div class="edis-screenshot-card">
+                                <img src="assets/images/EDIS-CS-SS-05.png" alt="EDIS AI Insights & Downloadable Report">
+                                <div class="edis-screenshot-caption">
+                                    <i class="fas fa-brain"></i>
+                                    <span><strong>AI Insights Engine:</strong> Automated narrative findings, strategic action priorities, and exportable field reports.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0,87,184,0.15); margin: 36px 0;">
+
+                    <h2>Delivered Business Impact & ROI</h2>
+                    
+                    <h3>Before vs After Execution</h3>
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Legacy Discom Operations</th>
+                                <th>EDIS Analytics Implementation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Manual Excel analysis</td><td>Automated AI intelligence platform</td></tr>
+                            <tr><td>Random/unprioritized inspections</td><td>Risk-driven, high-hit-rate field dispatch</td></tr>
+                            <tr><td>Reactive loss detection</td><td>Continuous monthly audit & early alerts</td></tr>
+                            <tr><td>Months of undetected theft</td><td>Rapid anomaly flagging within billing cycle</td></tr>
+                            <tr><td>Siloed data view</td><td>Enterprise-wide revenue assurance visibility</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Key Quantified Benefits</h3>
+                    <div class="cs-grid-2">
+                        <div class="cs-card">
+                            <h4><i class="fas fa-shield-halved" style="color:#10b981; margin-right:6px;"></i> Proven Revenue Protection</h4>
+                            <p>Direct reduction of commercial losses (AT&C) through precise detection of non-technical losses.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-bolt" style="color:#FF8C00; margin-right:6px;"></i> High-Efficiency Field Operations</h4>
+                            <p>Inspection hit rates increase dramatically, maximizing recovery per raid and reducing wasted site visits.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-bullseye" style="color:#0057B8; margin-right:6px;"></i> Resource Optimization</h4>
+                            <p>Vigilance squads deploy directly against pre-verified anomaly trails rather than random audits.</p>
+                        </div>
+                        <div class="cs-card">
+                            <h4><i class="fas fa-chart-column" style="color:#a855f7; margin-right:6px;"></i> Strategic Executive Insights</h4>
+                            <p>Provides leadership with clear, data-backed dashboards tracking loss recovery progress across all circles.</p>
+                        </div>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(0,87,184,0.15); margin: 36px 0;">
+
+                    <h2>Platform Snapshot & Deployment Summary</h2>
+                    
+                    <div class="cs-grid-3">
+                        <div class="cs-feature-card"><i class="fas fa-brain"></i> <span>AI-powered anomaly detection</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-bolt"></i> <span>Automated billing cycle evaluation</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-magnifying-glass"></i> <span>Explainable risk scoring & evidence</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-chart-pie"></i> <span>Operational vigilance dashboards</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-link"></i> <span>Integration with legacy billing & MDM</span></div>
+                        <div class="cs-feature-card"><i class="fas fa-cloud"></i> <span>Enterprise-ready Cloud or On-Premise</span></div>
+                    </div>
+
+                    <h3>Deployment Overview</h3>
+                    <table class="compare-table">
+                        <tbody>
+                            <tr><td style="width: 30%;"><strong>Industry</strong></td><td>Power Utilities / DISCOMs</td></tr>
+                            <tr><td><strong>Solution</strong></td><td>Fraud Analytics & Revenue Protection</td></tr>
+                            <tr><td><strong>Platform</strong></td><td>Enterprise Data Orchestration & Cognitive Intelligence System(EDIS)</td></tr>
+                            <tr><td><strong>Deployment</strong></td><td>Enterprise Cloud / On-Premise Infrastructure</td></tr>
+                            <tr><td><strong>Data Integrations</strong></td><td>Billing, AMR/AMI Metering, Consumer Master, Field Inspection Logs</td></tr>
+                            <tr><td><strong>Primary Users</strong></td><td>Vigilance Officers, Revenue Assurance, DISCOM Leadership</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="post-footer-nav">
+                    <a href="edis.html" class="post-back-link">
+                        <i class="fas fa-arrow-left"></i> Back to EDIS Platform
+                    </a>
+                </div>
+            </article>
+        </main>
+    </div> <!-- end .post-layout -->
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script>
+        /* ================================================
+           RENDER ENGINE
+        ================================================ */
+        function getCaseStudyId() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'));
+            return isNaN(id) ? 1 : id;
+        }
+
+        function renderCaseStudy(cs) {
+            document.getElementById('pageTitle').textContent = cs.title + ' – DatamatrixAI';
+            renderGlobalSidebar();
+            document.getElementById('postMain').innerHTML = `
+                <article class="post-article">
+
+                    <div class="post-header">
+                        <div class="post-header-meta">
+                            <span class="blog-category-badge ${cs.categoryClass}">${cs.category}</span>
+                            <span class="post-meta-item"><i class="fas fa-calendar-alt"></i> ${cs.date}</span>
+                            <span class="post-meta-item"><i class="fas fa-clock"></i> ${cs.readTime}</span>
+                        </div>
+                        <h1 class="post-title">${cs.title}</h1>
+
+                        <div class="blog-tags" style="margin-top: 1rem;">
+                            ${cs.tags.map(t => `<span class="blog-tag">${t}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="post-body">
+                        ${cs.body}
+                    </div>
+
+                    <div class="post-footer-nav">
+                        <a href="case-studies.html" class="post-back-link">
+                            <i class="fas fa-arrow-left"></i> Back to all Case Studies
+                        </a>
+                    </div>
+                </article>
+            `;
+
+            initProgressBar();
+        }
+
+        function renderNotFound() {
+            renderGlobalSidebar();
+            document.getElementById('postMain').innerHTML = `
+                <div class="post-not-found" style="text-align: center; padding: 60px 20px;">
+                    <i class="fas fa-file-circle-question" style="font-size: 3rem; color: #ef4444; margin-bottom: 16px;"></i>
+                    <h2>Case Study Not Found</h2>
+                    <p style="color: #9ca3af;">The requested case study could not be found.</p>
+                    <a href="case-studies.html" class="blog-read-btn" style="display:inline-flex; margin-top: 1.5rem; gap: 8px; align-items: center; text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i> Back to Case Studies
+                    </a>
+                </div>
+            `;
+        }
+
+        const id = getCaseStudyId();
+        const cs = caseStudies.find(item => item.id === id);
+        cs ? renderCaseStudy(cs) : renderNotFound();
+
+        function initProgressBar() {
+            const bar = document.getElementById('read-progress');
+            const article = document.querySelector('.post-article');
+            if (!bar || !article) return;
+
+            window.addEventListener('scroll', () => {
+                const articleTop = article.offsetTop;
+                const articleHeight = article.offsetHeight;
+                const scrolled = window.scrollY - articleTop;
+                const percent = Math.min(100, Math.max(0, (scrolled / articleHeight) * 100));
+                bar.style.width = percent + '%';
+            });
+        }
+    </script>
+    <!-- Load shared data and dynamic render scripts -->
+    <script src="js/case-studies-data.js?v=2.0.1"></script>
+    <script src="js/sidebar-render.js?v=2.0.1"></script>
+
+    <!-- Other page-specific scripts -->
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>

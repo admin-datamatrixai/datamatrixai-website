@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs – DatamatrixAI</title>
+    <meta name="description" content="Insights, research, and thinking on enterprise AI from the DatamatrixAI team.">
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+</head>
+<body>
+
+    <section class="blogs-hero">
+        <div class="blogs-hero-inner">
+            <p class="blogs-label">From the team</p>
+            <h1>Insights & <span class="highlight">Ideas</span></h1>
+            <p class="blogs-hero-sub">Thinking on enterprise AI, responsible deployment, and what's next in the field.</p>
+        </div>
+    </section>
+
+<section class="blogs-section">
+        <div class="blogs-container">
+
+            <div class="blogs-filter-bar">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <!-- <button class="filter-btn" data-filter="strategy">Strategy</button>
+                <button class="filter-btn" data-filter="engineering">Engineering</button>
+                <button class="filter-btn" data-filter="research">Research</button>
+                <button class="filter-btn" data-filter="product">Product</button> -->
+                <button class="filter-btn" data-filter="industry">Industry</button>
+            </div>
+
+            <div class="blogs-subfilter-bar" id="subfilterBar" style="display: none; margin-top: 12px; margin-bottom: 24px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+                <button class="subfilter-btn active" data-subfilter="all" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;">All Industries</button>
+                <button class="subfilter-btn" data-subfilter="power-discoms" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;">Power Discoms</button>
+            </div>
+
+            <style>
+                /* Helper styling inline to preserve your blogs.css structure */
+                .subfilter-btn:hover {
+                    border-color: rgba(255,255,255,0.4) !important;
+                    color: #ffffff !important;
+                }
+                .subfilter-btn.active {
+                    background: rgba(0, 87, 184, 0.2) !important;
+                    border-color: #0057B8 !important;
+                    color: #ffffff !important;
+                    box-shadow: 0 0 12px rgba(0, 87, 184, 0.3);
+                }
+                /* Color the specific sub-category filter active pill green */
+                .subfilter-btn[data-subfilter="power-discoms"].active {
+                    background: rgba(16, 185, 129, 0.15) !important; /* Muted translucent green bg */
+                    border-color: #10b981 !important;               /* Emerald green border */
+                    color: #10b981 !important;                      /* Emerald green text */
+                    box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+                }
+
+                /* Color the blog grid card badge green when it matches 'power-discoms' */
+                .bcc-badge.power-discoms {
+                    background: rgba(16, 185, 129, 0.15) !important;
+                    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+                    color: #10b981 !important;
+                }
+            </style>
+
+            <div class="blogs-grid" id="blogsGrid"></div>
+
+            <div class="blogs-empty" id="blogsEmpty" style="display:none;">
+                <i class="fas fa-folder-open"></i>
+                <p>No posts in this category yet. Check back soon.</p>
+            </div>
+
+            <div class="blogs-pagination" id="blogsPagination"></div>
+
+        </div>
+    </section>
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script>
+        /* ============================================================
+           ALL POSTS — Two-Tier Data Architecture Architecture
+           ============================================================ */
+        const allPosts = [
+            {
+                id: 1,
+                category: "industry",
+                subcategory: "power-discoms",
+                subcategoryLabel: "Power Discoms",
+                date: "July 2, 2026",
+                readTime: "5 min",
+                title: "The Measurement Challenge Behind AT&C Loss Computation in India's Distribution Sector"
+            }
+        ];
+
+        const POSTS_PER_PAGE = 6;
+        let currentFilter = 'all';
+        let currentSubfilter = 'all';
+        let currentPage = 1;
+
+        function getFiltered() {
+            let filtered = allPosts;
+            
+            // Filter Tier 1 (Main Category)
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(p => p.category === currentFilter);
+                
+                // Filter Tier 2 (Sub-category, only valid when parent category is active)
+                if (currentFilter === 'industry' && currentSubfilter !== 'all') {
+                    filtered = filtered.filter(p => p.subcategory === currentSubfilter);
+                }
+            }
+            return filtered;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const grid = document.getElementById('blogsGrid');
+            const empty = document.getElementById('blogsEmpty');
+            const pagination = document.getElementById('blogsPagination');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+                pagination.innerHTML = '';
+                return;
+            }
+            empty.style.display = 'none';
+
+            const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
+            if (currentPage > totalPages) currentPage = 1;
+
+            const start = (currentPage - 1) * POSTS_PER_PAGE;
+            const pagePosts = filtered.slice(start, start + POSTS_PER_PAGE);
+
+            grid.innerHTML = pagePosts.map(p => {
+                // Determine label string and color class logic
+                const displayCategory = p.category === 'industry' ? p.subcategoryLabel : p.category;
+                const badgeClass = p.category === 'industry' ? p.subcategory : p.category;
+
+                return `
+                    <a href="blog-post.html?id=${p.id}" class="blog-card-compact">
+                        <span class="bcc-badge ${badgeClass}">${displayCategory}</span>
+                        <h2 class="bcc-title">${p.title}</h2>
+                        <div class="bcc-meta">
+                            <span><i class="fas fa-calendar-alt"></i> ${p.date}</span>
+                            <span><i class="fas fa-clock"></i> ${p.readTime} read</span>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            // Pagination
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let btns = '';
+            btns += `<button class="pg-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                     </button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                btns += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+            }
+            btns += `<button class="pg-btn" onclick="goPage(${currentPage + 1})\" ${currentPage === totalPages ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                     </button>`;
+            pagination.innerHTML = btns;
+        }
+
+        function goPage(n) {
+            const total = Math.ceil(getFiltered().length / POSTS_PER_PAGE);
+            if (n < 1 || n > total) return;
+            currentPage = n;
+            renderGrid();
+            document.querySelector('.blogs-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Tier 1 (Main Category) Filtering Interactions
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentFilter = btn.dataset.filter;
+                currentSubfilter = 'all'; // Reset sub-filters on main track switch
+                currentPage = 1;
+
+                // Toggle visibility of Sub-filter row
+                const subfilterBar = document.getElementById('subfilterBar');
+                if (currentFilter === 'industry') {
+                    subfilterBar.style.display = 'flex';
+                    // Reset subfilter buttons visual state back to 'All Industries'
+                    document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.subfilter-btn[data-subfilter="all"]').classList.add('active');
+                } else {
+                    subfilterBar.style.display = 'none';
+                }
+
+                renderGrid();
+            });
+        });
+
+        // Tier 2 (Industry Sub-categories) Filtering Interactions
+        document.querySelectorAll('.subfilter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentSubfilter = btn.dataset.subfilter;
+                currentPage = 1;
+                renderGrid();
+            });
+        });
+
+        // Bootstrap on runtime
+        document.getElementById('subfilterBar').style.display = 'none';
+        renderGrid();
+    </script>
+
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>

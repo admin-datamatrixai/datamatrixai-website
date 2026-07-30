@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies – DatamatrixAI</title>
+    <meta name="description" content="Real-world deployments and measurable ROI from DatamatrixAI enterprise solutions.">
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <style>
+        /* Helper styling inline to preserve grid architecture and badge rules */
+        .subfilter-btn:hover {
+            border-color: rgba(255,255,255,0.4) !important;
+            color: #ffffff !important;
+        }
+        .subfilter-btn.active {
+            background: rgba(0, 87, 184, 0.2) !important;
+            border-color: #0057B8 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(0, 87, 184, 0.3);
+        }
+        
+        /* Active emerald green pill for Power Discoms sub-category */
+        .subfilter-btn[data-subfilter="power-discoms"].active {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+        }
+
+        /* Active teal pill for Edtech sub-category */
+        .subfilter-btn[data-subfilter="edtech"].active {
+            background: rgba(0, 166, 81, 0.15) !important;
+            border-color: #00A651 !important;
+            color: #00A651 !important;
+            box-shadow: 0 0 12px rgba(0, 166, 81, 0.25);
+        }
+
+        /* Green badge for Power Discoms cards */
+        .bcc-badge.power-discoms {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            color: #10b981 !important;
+        }
+
+        /* Teal badge for Edtech cards */
+        .bcc-badge.edtech {
+            background: rgba(0, 166, 81, 0.15) !important;
+            border: 1px solid rgba(0, 166, 81, 0.3) !important;
+            color: #00A651 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="blogs-hero">
+        <div class="blogs-hero-inner">
+            <p class="blogs-label">Proven Impact</p>
+            <h1>Real Deployments. <span class="highlight">Real Numbers.</span></h1>
+            <p class="blogs-hero-sub">In-depth analysis and measurable outcomes from our production AI implementations.</p>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES SECTION -->
+    <section class="blogs-section">
+        <div class="blogs-container">
+
+            <!-- TIER 1 FILTER BAR -->
+            <div class="blogs-filter-bar">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="industry">Industry</button>
+            </div>
+
+            <!-- TIER 2 SUB-FILTER BAR (Visible when Industry is active) -->
+            <div class="blogs-subfilter-bar" id="subfilterBar" style="display: none; margin-top: 12px; margin-bottom: 24px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+                <button class="subfilter-btn active" data-subfilter="all" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;">All Industries</button>
+                <button class="subfilter-btn" data-subfilter="power-discoms" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;">Power Discoms</button>
+                <button class="subfilter-btn" data-subfilter="edtech" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;">Edtech</button>
+            </div>
+
+            <!-- CASE STUDIES GRID -->
+            <div class="blogs-grid" id="caseStudiesGrid"></div>
+
+            <!-- EMPTY STATE -->
+            <div class="blogs-empty" id="caseStudiesEmpty" style="display:none;">
+                <i class="fas fa-folder-open"></i>
+                <p>No case studies in this category yet. Check back soon.</p>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="blogs-pagination" id="caseStudiesPagination"></div>
+
+        </div>
+    </section>
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script>
+        /* ============================================================
+           ALL CASE STUDIES — Two-Tier Data Architecture
+           ============================================================ */
+        const allCaseStudies = [
+            {
+                id: 1,
+                category: "industry",
+                subcategory: "power-discoms",
+                subcategoryLabel: "Power Discoms",
+                date: "Feb 2026",
+                type: "Case Study",
+                title: "AI-Driven Revenue Protection in Power Utilities: EDIS Fraud Analytics",
+                url: "case-study-post.html?id=1"
+            },
+            {
+                id: 2,
+                category: "industry",
+                subcategory: "edtech",
+                subcategoryLabel: "Edtech",
+                date: "July 2026",
+                type: "Case Study",
+                title: "DataMatrixAI Assessment Engine: AI-Driven Exam Readiness & Competency Analytics for Edtech & Universities",
+                url: "cfa-mock-test-case-study.html"
+            }
+        ];
+
+        const POSTS_PER_PAGE = 6;
+        let currentFilter = 'all';
+        let currentSubfilter = 'all';
+        let currentPage = 1;
+
+        function getFiltered() {
+            let filtered = allCaseStudies;
+            
+            // Filter Tier 1
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(cs => cs.category === currentFilter);
+                
+                // Filter Tier 2 (Sub-category)
+                if (currentFilter === 'industry' && currentSubfilter !== 'all') {
+                    filtered = filtered.filter(cs => cs.subcategory === currentSubfilter);
+                }
+            }
+            return filtered;
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered();
+            const grid = document.getElementById('caseStudiesGrid');
+            const empty = document.getElementById('caseStudiesEmpty');
+            const pagination = document.getElementById('caseStudiesPagination');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+                pagination.innerHTML = '';
+                return;
+            }
+            empty.style.display = 'none';
+
+            const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
+            if (currentPage > totalPages) currentPage = 1;
+
+            const start = (currentPage - 1) * POSTS_PER_PAGE;
+            const pagePosts = filtered.slice(start, start + POSTS_PER_PAGE);
+
+            grid.innerHTML = pagePosts.map(cs => {
+                const displayCategory = cs.category === 'industry' ? cs.subcategoryLabel : cs.category;
+                const badgeClass = cs.category === 'industry' ? cs.subcategory : cs.category;
+
+                return `
+                    <a href="${cs.url}" class="blog-card-compact">
+                        <span class="bcc-badge ${badgeClass}">${displayCategory}</span>
+                        <h2 class="bcc-title">${cs.title}</h2>
+                        <div class="bcc-meta">
+                            <span><i class="fas fa-calendar-alt"></i> ${cs.date}</span>
+                            <span><i class="fas fa-file-contract"></i> ${cs.type}</span>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+
+            // Pagination Controls
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let btns = '';
+            btns += `<button class="pg-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                     </button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                btns += `<button class="pg-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+            }
+            btns += `<button class="pg-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                     </button>`;
+            pagination.innerHTML = btns;
+        }
+
+        function goPage(n) {
+            const total = Math.ceil(getFiltered().length / POSTS_PER_PAGE);
+            if (n < 1 || n > total) return;
+            currentPage = n;
+            renderGrid();
+            document.querySelector('.blogs-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Tier 1 Category Filtering
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentFilter = btn.dataset.filter;
+                currentSubfilter = 'all';
+                currentPage = 1;
+
+                const subfilterBar = document.getElementById('subfilterBar');
+                if (currentFilter === 'industry') {
+                    subfilterBar.style.display = 'flex';
+                    document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.subfilter-btn[data-subfilter="all"]').classList.add('active');
+                } else {
+                    subfilterBar.style.display = 'none';
+                }
+
+                renderGrid();
+            });
+        });
+
+        // Tier 2 Sub-category Filtering
+        document.querySelectorAll('.subfilter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.subfilter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                currentSubfilter = btn.dataset.subfilter;
+                currentPage = 1;
+                renderGrid();
+            });
+        });
+
+        // Initialize Grid
+        document.getElementById('subfilterBar').style.display = 'none';
+        renderGrid();
+    </script>
+
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>

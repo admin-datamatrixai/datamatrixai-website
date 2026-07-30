@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge & Competency Engine — DatamatrixAI</title>
+    <meta name="description" content="AI-powered intelligence that measures, develops and accelerates workforce capability — so your people and your business win.">
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css?v=2.0.1">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+
+    <style>
+        :root {
+            /* Customized color coding - Unique branding palette for LMS while staying in-line with global theme */
+            --teal:      #00A651;
+            --teal-glow: rgba(0, 166, 81, 0.15);
+            --teal-border: rgba(0, 166, 81, 0.22);
+            --bg:        #05070a;
+            --bg2:       #060d14;
+            --bg3:       #030910;
+            --border:    rgba(0, 166, 81, 0.15);
+            --white:     #ffffff;
+            --dim:       #a0aec0;
+            --dimmer:    #4a5568;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ─── COMMON REUSABLE COMPONENTS ─── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            width: 100%;
+        }
+
+        .section {
+            padding: 100px 5%;
+            position: relative;
+        }
+        .section--dark {
+            background: var(--bg3);
+        }
+        .section__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sec-label {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--teal);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .sec-heading {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+        .sec-heading em {
+            font-style: normal;
+            color: var(--teal);
+        }
+
+        /* ─── HERO SECTION ─── */
+        .lms-hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 5% 80px 5%;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 166, 81, 0.07), transparent 60%);
+            text-align: center;
+            position: relative;
+        }
+        .lms-hero__inner {
+            max-width: 900px;
+        }
+        .lms-hero__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal-border);
+            color: var(--teal);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+        .lms-hero__title {
+            font-family: 'Inter', sans-serif;                /* Switched to Syne to match EDIS styling rules */
+            font-size: clamp(2rem, 5.5vw, 3.2rem) !important; /* Adjusted scale boundaries to match the exact EDIS footprint */
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;        
+        }
+        .lms-hero__title span {
+            color: var(--teal);
+        }
+        .lms-hero__desc {
+            font-size: clamp(1.0rem, 2vw, 1.2rem);
+            color: var(--dim);
+            line-height: 1.6;
+            max-width: 720px;
+            margin: 0 auto 40px auto;
+            font-weight: 400;
+        }
+
+        /* Stats Grid */
+        .lms-stats {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            gap: 24px;
+            margin: 60px auto 0 auto;
+            text-align: center;
+            justify-content: center;
+        }
+        .lms-stat-card {
+            background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-top: 2px solid var(--teal);
+            padding: 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .lms-stat-card:hover {
+            background: var(--teal-glow);
+            border-color: var(--teal-border);
+            transform: translateY(-2px);
+        }
+        .lms-stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .lms-stat-label {
+            font-size: 0.85rem;
+            color: var(--dim);
+            line-height: 1.4;
+        }
+
+        /* ─── CHALLENGES MATRIX TABLE ─── */
+        .matrix-container {
+            margin-top: 30px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .matrix-header {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            background: rgba(0, 166, 81, 0.08);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .matrix-header div {
+            padding: 18px 24px;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+        .matrix-row {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            background: rgba(5,7,10,0.4);
+            transition: background 0.2s ease;
+        }
+        .matrix-row:last-child {
+            border-bottom: none;
+        }
+        .matrix-row:hover {
+            background: rgba(255,255,255,0.01);
+        }
+        .matrix-cell {
+            padding: 24px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .matrix-cell.challenge {
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            border-right: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .matrix-cell.challenge i {
+            color: #ef4444;
+            font-size: 0.9rem;
+        }
+        .matrix-cell.response {
+            color: var(--dim);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .matrix-cell.response i {
+            color: var(--teal);
+            font-size: 0.95rem;
+        }
+
+        /* ─── STRATEGIC STEPS JOURNEY ─── */
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .journey-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            border: 1px solid rgba(255,255,255,0.04);
+            padding: 24px;
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .journey-card:hover {
+            border-color: var(--teal-border);
+            background: var(--teal-glow);
+        }
+        .journey-step {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+        .journey-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .journey-desc {
+            font-size: 0.82rem;
+            color: var(--dim);
+            line-height: 1.5;
+        }
+
+        /* ─── CAPABILITIES GRID ─── */
+        .caps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .cap-card {
+            background: var(--bg2);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cap-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--teal-border);
+            box-shadow: 0 12px 30px rgba(0, 166, 81, 0.06);
+        }
+        .cap-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+        }
+        .cap-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+        .cap-desc {
+            font-size: 0.88rem;
+            color: var(--dim);
+            line-height: 1.6;
+        }
+
+        /* ─── SCROLL REVEAL ANIMATIONS ─── */
+        .sr {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sr--visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .sr--delay-1 { transition-delay: 0.1s; }
+        .sr--delay-2 { transition-delay: 0.2s; }
+        .sr--delay-3 { transition-delay: 0.3s; }
+        .sr--delay-4 { transition-delay: 0.4s; }
+
+        /* ─── PRODUCT FOOTPRINT ─── */
+        .lms-footprint {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lms-industry-block {
+            margin-bottom: 32px;
+        }
+
+        .lms-footprint__card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 16px;
+        }
+
+        .lms-industry-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal-border);
+            border-radius: 100px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .lms-industry-pill i {
+            color: var(--teal);
+            font-size: 0.85rem;
+        }
+
+        .lms-footprint-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .lms-deployment-card,
+        .lms-case-preview {
+            background: var(--bg2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .lms-deployment-card:hover,
+        .lms-case-preview:hover {
+            border-color: var(--teal-border);
+            box-shadow: 0 12px 30px rgba(0, 166, 81, 0.06);
+        }
+
+        .lms-footprint__card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+
+        .lms-deployment-company {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .lms-deployment-meta {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dim);
+            margin-bottom: 20px;
+        }
+
+        .lms-case-preview h4 {
+            font-size: 1.35rem;
+            color: var(--white);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .lms-case-preview p {
+            color: var(--dim);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .lms-case-preview__tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: var(--teal-glow);
+            border: 1px solid var(--teal-border);
+            color: var(--teal);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .lms-case-preview__tag:hover {
+            background: rgba(0, 166, 81, 0.25);
+            border-color: var(--teal);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .lms-footprint-bottom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Responsive Layout Overrides */
+        @media (max-width: 1024px) {
+            .lms-stats { grid-template-columns: repeat(2, 1fr); }
+            .journey-grid { grid-template-columns: repeat(2, 1fr); }
+            .caps-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .lms-stats, .journey-grid, .caps-grid { grid-template-columns: 1fr; }
+            .matrix-header, .matrix-row { grid-template-columns: 1fr; }
+            .matrix-cell.challenge { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="lms-hero">
+        <div class="lms-hero__inner">
+            <div class="lms-hero__badge sr sr--visible">
+                <i class="fas fa-graduation-cap"></i> Knowledge & Competency Engine
+            </div>
+            <h1 class="lms-hero__title sr sr--visible sr--delay-1">
+                Build a Workforce That Learns Faster, Performs Better, and Delivers <span>Measurable Capability.</span>
+            </h1>
+            <p class="lms-hero__desc sr sr--visible sr--delay-2">
+                AI-powered intelligence that measures, develops and accelerates workforce capability — <span style="color: var(--white); font-weight: 600; border-bottom: 2px solid var(--teal);">so your people and your business win.</span>
+            </p>
+
+            <div class="lms-stats sr sr--visible sr--delay-3">
+                <div class="lms-stat-card">
+                    <div class="lms-stat-num">30–50%</div>
+                    <div class="lms-stat-label">Faster Onboarding</div>
+                </div>
+                <div class="lms-stat-card">
+                    <div class="lms-stat-num">25–35%</div>
+                    <div class="lms-stat-label">Higher Retention</div>
+                </div>
+                <div class="lms-stat-card">
+                    <div class="lms-stat-num">20–30%</div>
+                    <div class="lms-stat-label">Lower Training Cost</div>
+                </div>
+                <div class="lms-stat-card">
+                    <div class="lms-stat-num">Real-Time</div>
+                    <div class="lms-stat-label">Competency Visibility</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+    <section class="section">
+        <div class="section__inner">
+            <span class="sec-label sr">Operational Friction</span>
+            <h2 class="sec-heading sr sr--delay-1">Solving Your Toughest <em>Workforce Challenges</em></h2>
+            
+            <div class="matrix-container sr sr--delay-2">
+                <div class="matrix-header">
+                    <div>Organisation Challenge</div>
+                    <div>DataMatrixAI Response</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell challenge"><i class="fas fa-triangle-exclamation"></i> Slow onboarding</div>
+                    <div class="matrix-cell response"><i class="fas fa-circle-check"></i> AI measures readiness and accelerates time to productivity</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell challenge"><i class="fas fa-triangle-exclamation"></i> Generic learning</div>
+                    <div class="matrix-cell response"><i class="fas fa-circle-check"></i> Adaptive learning journeys tailored to each individual</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell challenge"><i class="fas fa-triangle-exclamation"></i> Hidden skill gaps</div>
+                    <div class="matrix-cell response"><i class="fas fa-circle-check"></i> Continuous competency mapping and gap identification</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell challenge"><i class="fas fa-triangle-exclamation"></i> Manager blind spots</div>
+                    <div class="matrix-cell response"><i class="fas fa-circle-check"></i> Real-time workforce analytics and insights</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell challenge"><i class="fas fa-triangle-exclamation"></i> Poor ROI visibility</div>
+                    <div class="matrix-cell response"><i class="fas fa-circle-check"></i> Outcome measurement that proves business impact</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+    <section class="section section--dark">
+        <div class="section__inner">
+            <span class="sec-label sr">Execution Framework</span>
+            <h2 class="sec-heading sr sr--delay-1">The DataMatrixAI 5-Step <em>Workforce Intelligence Journey</em></h2>
+
+            <div class="journey-grid">
+                <div class="journey-card sr sr--delay-1">
+                    <div class="journey-step">Step 1</div>
+                    <div class="journey-title">Assess</div>
+                    <div class="journey-desc">AI assesses skills, knowledge and readiness dynamically across roles.</div>
+                </div>
+                <div class="journey-card sr sr--delay-2">
+                    <div class="journey-step">Step 2</div>
+                    <div class="journey-title">Personalise</div>
+                    <div class="journey-desc">Personalised learning paths target the right skills at the absolute right time.</div>
+                </div>
+                <div class="journey-card sr sr--delay-3">
+                    <div class="journey-step">Step 3</div>
+                    <div class="journey-title">Accelerate</div>
+                    <div class="journey-desc">Continuous learning and simulation practice drive real execution performance.</div>
+                </div>
+                <div class="journey-card sr sr--delay-4">
+                    <div class="journey-step">Step 4</div>
+                    <div class="journey-title">Measure</div>
+                    <div class="journey-desc">Real-time measurement and performance analytics track functional competency growth.</div>
+                </div>
+                <div class="journey-card sr sr--delay-5">
+                    <div class="journey-step">Step 5</div>
+                    <div class="journey-title">Improve</div>
+                    <div class="journey-desc">Deep structural insights drive ongoing targeted improvement across teams and the organization.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+    <section class="section">
+        <div class="section__inner">
+            <span class="sec-label sr">Engine Architecture</span>
+            <h2 class="sec-heading sr sr--delay-1">Platform <em>Capabilities</em></h2>
+
+            <div class="caps-grid">
+                <div class="cap-card sr sr--delay-1">
+                    <div class="cap-icon"><i class="fas fa-brain"></i></div>
+                    <div class="cap-title">AI Intelligence</div>
+                    <div class="cap-desc">Advanced AI models understand skills, cross-functional engineering roles, and operational context.</div>
+                </div>
+                <div class="cap-card sr sr--delay-2">
+                    <div class="cap-icon"><i class="fas fa-sliders"></i></div>
+                    <div class="cap-title">Adaptive Learning</div>
+                    <div class="cap-desc">Dynamic learning experiences that adapt seamlessly to the speed and comprehension layer of each learner.</div>
+                </div>
+                <div class="cap-card sr sr--delay-3">
+                    <div class="cap-icon"><i class="fas fa-database"></i></div>
+                    <div class="cap-title">Enterprise Knowledge</div>
+                    <div class="cap-desc">Capture, structure, and instantly activate your critical organizational knowledge and documentation.</div>
+                </div>
+                <div class="cap-card sr sr--delay-1">
+                    <div class="cap-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="cap-title">Real-Time Analytics</div>
+                    <div class="cap-desc">Live dashboards provide workforce visibility across the enterprise.</div>
+                </div>
+                <div class="cap-card sr sr--delay-2">
+                    <div class="cap-icon"><i class="fas fa-eye"></i></div>
+                    <div class="cap-title">Leadership Insights</div>
+                    <div class="cap-desc">Equip leaders with programmatic metrics to effectively coach, support, and make strategic and smarter decisions.</div>
+                </div>
+                <div class="cap-card sr sr--delay-3">
+                    <div class="cap-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="cap-title">Outcome Measurement</div>
+                    <div class="cap-desc">Prove clear human resource ROI with hard data validation metrics linking knowledge curves directly to business outcomes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+    <section class="section section--dark">
+        <div class="section__inner" style="text-align: center;">
+            <span class="sec-label sr">Business Validation</span>
+            <h2 class="sec-heading sr sr--delay-1">Proven <em>Business Impact</em></h2>
+            
+            <div class="lms-stats sr sr--delay-2" style="max-width: 900px; margin: 0 auto 50px auto;">
+                <div class="lms-stat-card" style="text-align: center; width: 100%; box-sizing: border-box;">
+                    <div class="lms-stat-num" style="color: var(--teal); text-align: center; width: 100%;">6,000+</div>
+                    <div class="lms-stat-label" style="text-align: center; width: 100%; margin: 0 auto;">Hours Saved through automation and smarter learning.</div>
+                </div>
+                <div class="lms-stat-card" style="text-align: center; width: 100%; box-sizing: border-box;">
+                    <div class="lms-stat-num" style="color: var(--teal); text-align: center; width: 100%;">25–30%</div>
+                    <div class="lms-stat-label" style="text-align: center; width: 100%; margin: 0 auto;">Faster Readiness with people reaching full productivity sooner.</div>
+                </div>
+                <div class="lms-stat-card" style="text-align: center; width: 100%; box-sizing: border-box;">
+                    <div class="lms-stat-num" style="color: var(--teal); text-align: center; width: 100%;">20–30%</div>
+                    <div class="lms-stat-label" style="text-align: center; width: 100%; margin: 0 auto;">Lower Training Cost while actively scaling up skill curves.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+    <!-- ═══════════ PRODUCT FOOTPRINT ═══════════ -->
+    <section class="section">
+        <div class="section__inner">
+            <div class="lms-footprint">
+                <div class="sr">
+                    <span class="sec-label">Product Footprint</span>
+                    <h2 class="sec-heading">Where the Platform is <em>Already Deployed.</em></h2>
+                </div>
+
+                <!-- Industry Tag -->
+                <div class="lms-industry-block sr sr--delay-1">
+                    <div class="lms-footprint__card-title">Industry</div>
+                    <div class="lms-industry-pill">
+                        <i class="fas fa-graduation-cap"></i>
+                        Edtech & Professional Training
+                    </div>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="lms-footprint-bottom">
+                    <!-- Active Deployment Card -->
+                    <div class="lms-deployment-card sr sr--delay-2">
+                        <div class="lms-footprint__card-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="lms-footprint__card-title">Active Deployment</div>
+                        <div class="lms-deployment-company">Christ University</div>
+                        <div class="lms-deployment-meta">Academic Institution · India</div>
+                    </div>
+
+                    <!-- Case Study Preview Card -->
+                    <div class="lms-case-preview sr sr--delay-3">
+                        <div class="lms-footprint__card-icon"><i class="fas fa-file-lines"></i></div>
+                        <div class="lms-footprint__card-title">Case Study</div>
+                        <h4>DataMatrixAI Assessment Engine: AI-Driven Exam Readiness for Edtech</h4>
+                        <p>Discover how Christ University leveraged our cloud platform for CFA mock exams, providing students and faculty with real-time analytics to boost test success.</p>
+                        <a href="cfa-mock-test-case-study.html" class="lms-case-preview__tag">
+                            Read Case Study <i class="fas fa-arrow-right" style="font-size: 0.75rem;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="divider"></div>
+    <section class="section section--dark">
+        <div class="section__inner" style="text-align: center;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 600;">Ready to Transform Your Workforce?</h3>
+            <p style="color: var(--dim); margin-bottom: 30px;">Let's discuss how DataMatrixAI can help you build a workforce that learns faster and performs better.</p>
+            <a href="index.html#contact" class="edis-case-preview__tag" style="display: inline-block; background: var(--teal); color: white; border: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; text-decoration: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.2s;">
+                Contact Us &nbsp; →
+            </a>
+        </div>
+    </section>
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script>
+    (function () {
+        const els = document.querySelectorAll('.sr');
+        if (!els.length) return;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('sr--visible');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        els.forEach(el => obs.observe(el));
+
+        // ─── ANTI-CASUAL INSPECTION DETERRENT ───
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Deter common developer tool keyboard shortcuts
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'J' || event.key === 'C')) || 
+                (event.ctrlKey && (event.key === 'u' || event.key === 'U')) ||
+                (event.metaKey && event.altKey && event.key === 'i') || // Mac DevTools
+                (event.ctrlKey && (event.key === 's' || event.key === 'S')) || // Windows Save
+                (event.metaKey && (event.key === 's' || event.key === 'S'))    // Mac Save
+            ) {
+                event.preventDefault();
+            }
+        });
+    })();
+    </script>
+
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>

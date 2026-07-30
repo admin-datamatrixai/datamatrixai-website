@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POVs — DatamatrixAI</title>
+    <meta name="description" content="Points of view on enterprise AI, responsible deployment, and what's next — from the DatamatrixAI team.">
+    <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #05070a;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* ── PAGE WRAPPER ── */
+        .cs-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 5% 80px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Background glow */
+        .cs-page::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px; height: 500px;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(0,87,184,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(255,140,0,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Subtle grid */
+        .cs-page::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,87,184,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,87,184,0.035) 1px, transparent 1px);
+            background-size: 52px 52px;
+            pointer-events: none;
+        }
+
+        /* ── CONTENT ── */
+        .cs-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+
+
+        /* Heading */
+        .cs-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1rem, 4vw, 2.4rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<script src="js/nav-inject.js?v=2.0.1"></script>
+
+<main class="cs-page">
+    <div class="cs-inner">
+        </div>
+
+        <h1 class="cs-heading">
+            Our thinking.<br>Coming soon.
+        </h1>
+
+    </div>
+</main>
+
+<script src="js/nav.js?v=2.0.1"></script>
+</body>
+</html>
