@@ -54,6 +54,12 @@ const NAV_HTML = `
                             <span class="nav-dropdown__sub">Real deployments, real results</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="povs.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">POVs</span>
+                            <span class="nav-dropdown__sub">Our thinking</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 

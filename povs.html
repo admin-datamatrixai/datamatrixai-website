@@ -4,100 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POVs — DatamatrixAI</title>
-    <meta name="description" content="Points of view on enterprise AI, responsible deployment, and what's next — from the DatamatrixAI team.">
+    <meta name="description" content="Points of view on enterprise AI, responsible deployment, and product vision — from the DatamatrixAI team.">
     <link rel="icon" type="image/png" href="assets/images/logo.png?v=2.0.1">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css?v=2.0.1">
+    <link rel="stylesheet" href="css/blogs.css?v=2.0.1">
     <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: #05070a;
-            color: #ffffff;
-            overflow-x: hidden;
-            min-height: 100vh;
+        .bcc-badge.pov-badge {
+            background: rgba(255, 140, 0, 0.15) !important;
+            border: 1px solid rgba(255, 140, 0, 0.3) !important;
+            color: #FF8C00 !important;
         }
-        a { text-decoration: none; color: inherit; }
-
-        /* ── PAGE WRAPPER ── */
-        .cs-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 120px 5% 80px;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        /* Background glow */
-        .cs-page::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 700px; height: 500px;
-            background:
-                radial-gradient(ellipse at 30% 50%, rgba(0,87,184,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 50%, rgba(255,140,0,0.06) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        /* Subtle grid */
-        .cs-page::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0,87,184,0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,87,184,0.035) 1px, transparent 1px);
-            background-size: 52px 52px;
-            pointer-events: none;
-        }
-
-        /* ── CONTENT ── */
-        .cs-inner {
-            position: relative;
-            z-index: 1;
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-
-
-        /* Heading */
-        .cs-heading {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(1rem, 4vw, 2.4rem);
-            font-weight: 800;
-            line-height: 1.08;
-            letter-spacing: -0.03em;
-            color: #ffffff;
-            margin-bottom: 16px;
-        }
-
     </style>
 </head>
 <body>
 
-<script src="js/nav-inject.js?v=2.0.1"></script>
-
-<main class="cs-page">
-    <div class="cs-inner">
+    <!-- HERO SECTION -->
+    <section class="blogs-hero">
+        <div class="blogs-hero-inner">
+            <p class="blogs-label">Product Insights</p>
+            <h1>Our Points <span class="highlight">of View.</span></h1>
+            <p class="blogs-hero-sub">Perspectives on enterprise decision intelligence, responsible AI architecture, and product evolution.</p>
         </div>
+    </section>
 
-        <h1 class="cs-heading">
-            Our thinking.<br>Coming soon.
-        </h1>
+    <!-- POVS SECTION -->
+    <section class="blogs-section">
+        <div class="blogs-container">
 
-    </div>
-</main>
+            <!-- POVS GRID -->
+            <div class="blogs-grid" id="povsGrid"></div>
 
-<script src="js/nav.js?v=2.0.1"></script>
+            <!-- EMPTY STATE -->
+            <div class="blogs-empty" id="povsEmpty" style="display:none;">
+                <i class="fas fa-folder-open"></i>
+                <p>No points of view listed yet. Check back soon.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="js/footer-loader.js?v=2.0.1"></script>
+
+    <script>
+        const allPOVs = [
+            {
+                id: 1,
+                category: "Product POV",
+                date: "Aug 2026",
+                type: "POV",
+                title: "EDIS Decision Intelligence Platform: Relational Data Inference & Auditability",
+                url: "pov-edis.html"
+            }
+        ];
+
+        function renderGrid() {
+            const grid = document.getElementById('povsGrid');
+            const empty = document.getElementById('povsEmpty');
+
+            if (allPOVs.length === 0) {
+                grid.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            grid.innerHTML = allPOVs.map(pov => `
+                <a href="${pov.url}" class="blog-card-compact">
+                    <span class="bcc-badge pov-badge">${pov.category}</span>
+                    <h2 class="bcc-title">${pov.title}</h2>
+                    <div class="bcc-meta">
+                        <span><i class="fas fa-calendar-alt"></i> ${pov.date}</span>
+                        <span><i class="fas fa-eye"></i> ${pov.type}</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        renderGrid();
+    </script>
+
+    <script src="js/nav-inject.js?v=2.0.1"></script>
+    <script src="js/nav.js?v=2.0.1"></script>
 </body>
 </html>

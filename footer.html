@@ -12,9 +12,9 @@
             </p>
             <div class="social-icons">
                 <a href="https://www.linkedin.com/company/datamatrixai-in/"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
+                <!-- <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a> -->
             </div>
         </div>
 
@@ -49,10 +49,16 @@
             <p class="newsletter-desc">
                 Subscribe to our newsletter to receive updates on the latest AI trends.
             </p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Your Email Address" required>
-                <button type="submit">Subscribe</button>
+            <!-- Newsletter Form -->
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" id="newsletterEmail" placeholder="Your Email Address" required>
+                <button type="submit" id="newsletterSubmitBtn">Subscribe</button>
             </form>
+
+            <!-- Success Confirmation Message (Hidden initially) -->
+            <div id="newsletterSuccessMsg" style="display: none; margin-top: 12px; color: #34D399; font-size: 14px; line-height: 1.4;">
+                <i class="fas fa-check-circle"></i> Thank you for subscribing! We have recorded your email address and will keep you updated with our latest newsletter and insights.
+            </div>
         </div>
 
     </div>
