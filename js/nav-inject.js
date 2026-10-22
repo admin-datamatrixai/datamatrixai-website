@@ -82,7 +82,7 @@ const NAV_HTML = `
                     </li>
                         <li>
                         <a href="Advisory.html" class="nav-dropdown__link">
-                            <span class="nav-dropdown__title">Advisory</span>
+                            <span class="nav-dropdown__title">Advisory Board</span>
                             <span class="nav-dropdown__sub">Meet Our Advisors</span>
                         </a>
                     </li>
