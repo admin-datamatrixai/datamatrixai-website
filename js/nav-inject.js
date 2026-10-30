@@ -36,6 +36,19 @@ const NAV_HTML = `
                 </ul>
             </li>
 
+            <li class="nav-item--dropdown">
+                <a href="#" class="nav-link nav-link--has-dropdown">
+                    Industry <i class="fas fa-chevron-down nav-chevron"></i>
+                </a>
+                <ul class="nav-dropdown">
+                    <li>
+                        <a href="transformer-monitoring.html" class="nav-dropdown__link">
+                            <span class="nav-dropdown__title">Electricity DISCOM</span>
+                            <span class="nav-dropdown__sub">AI Solutions for Power Distribution</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
             <li class="nav-item--dropdown">
                 <a href="#" class="nav-link nav-link--has-dropdown">
@@ -80,7 +93,7 @@ const NAV_HTML = `
                             <span class="nav-dropdown__sub">Meet the team</span>
                         </a>
                     </li>
-                        <li>
+                    <li>
                         <a href="Advisory.html" class="nav-dropdown__link">
                             <span class="nav-dropdown__title">Advisory Board</span>
                             <span class="nav-dropdown__sub">Meet Our Advisors</span>
@@ -92,7 +105,6 @@ const NAV_HTML = `
                             <span class="nav-dropdown__sub">STPI and beyond</span>
                         </a>
                     </li>
-                 
                     <li>
                         <a href="locations.html" class="nav-dropdown__link">
                             <span class="nav-dropdown__title">Office Locations</span>
