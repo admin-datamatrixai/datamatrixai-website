@@ -342,7 +342,7 @@ section:not(.site-footer) {
     list-style: none;
     padding: 0;
     margin: 0;
-    text-align: left;
+    text-align: center;
 }
 
 .footer-links li { margin-bottom: 10px; }
@@ -367,7 +367,7 @@ section:not(.site-footer) {
     margin-bottom: 15px;
     font-size: 0.9rem;
     line-height: 1.5;
-    text-align: left;
+    text-align: center;
 }
 
 .newsletter-form {
