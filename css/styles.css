@@ -810,3 +810,29 @@ section:not(.site-footer) {
     justify-content: center;
     gap: 10px;
 }
+
+/* ============================================
+   GLOBAL FOOTER ALIGNMENT OVERRIDE
+   ============================================ */
+.site-footer .footer-col,
+.site-footer .footer-heading,
+.site-footer .footer-links,
+.site-footer .newsletter-desc,
+.site-footer .footer-col.company-info {
+    text-align: center !important;
+}
+
+.site-footer .footer-heading::after {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+.site-footer .footer-logo,
+.site-footer .social-icons {
+    justify-content: center !important;
+}
+
+.site-footer .company-desc {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
