@@ -236,15 +236,23 @@ section:not(.site-footer) {
 /* Flexible width column proportions */
 .footer-col {
     min-width: 0;
+    text-align: center;
 }
 
 .footer-col.company-info {
     flex: 1.3;
-    text-align: left;
+    text-align: center;
+}
+
+.footer-col.company-info .footer-logo,
+.footer-col.company-info .social-icons {
+    justify-content: center;
 }
 
 .footer-col.company-info .company-desc {
     max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Products & Industry column */
