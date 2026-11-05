@@ -12,34 +12,26 @@
     <link rel="stylesheet" href="css/styles.css?v=2.0.3">
     <link rel="stylesheet" href="css/sections-new.css?v=2.0.3">
     <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.3">
-
     <link rel="icon" type="image/png" href="assets/images/logo.png">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,0..40,300&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,0..40,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/nav-dropdown.css?v=2.0.1">
 
     <style>
         /* Advisory Board — matched to the Founders page */
+        .advisory-page {
+            background: #05070a;
+            color: #ffffff;
+            padding: 100px 22px 88px;
+            min-height: 100vh;
+        }
 
-
-.advisory-page {
-    background: #05070a;
-    color: #ffffff;
-    padding: 100px 22px 88px;
-    min-height: 100vh;
-}
-
-.advisory-wrap {
-    width: min(1180px, calc(100% - 48px));
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-
-}
+        .advisory-wrap {
+            width: min(1180px, calc(100% - 48px));
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
         .advisory-eyebrow {
             color: #ff8c00;
             font-family: 'DM Sans', sans-serif;
@@ -49,141 +41,134 @@
             text-transform: uppercase;
             margin: 0 0 12px;
             text-align: center;
-margin-left: auto;
-margin-right: auto;
+            margin-left: auto;
+            margin-right: auto;
         }
-.advisory-eyebrow-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: fit-content;
-    margin: 0 auto 28px;
-    padding: 6px 16px;
-    border: 1px solid rgba(255, 140, 0, 0.28);
-    border-radius: 100px;
-    background: rgba(255, 140, 0, 0.06);
-    color: #FF8C00;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    position: relative;
-}
+        .advisory-eyebrow-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            margin: 0 auto 28px;
+            padding: 6px 16px;
+            border: 1px solid rgba(255, 140, 0, 0.28);
+            border-radius: 100px;
+            background: rgba(255, 140, 0, 0.06);
+            color: #FF8C00;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            position: relative;
+        }
 
-.advisory-badge-icon {
-    font-size: 0.85rem;
-}
+        .advisory-badge-icon {
+            font-size: 0.85rem;
+        }
 
-.advisory-badge-icon {
-    font-size: 14px;
-}
- .advisory-heading {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.3rem, 3.5vw, 2.1rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: #ffffff;
-    text-align: center;
-    margin: 0 0 20px;
-    position: relative;
-}
+        .advisory-badge-icon {
+            font-size: 14px;
+        }
+         .advisory-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.3rem, 3.5vw, 2.1rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            color: #ffffff;
+            text-align: center;
+            margin: 0 0 20px;
+            position: relative;
+        }
 
-.advisory-heading span {
-    color: #FF8C00;
-}
-.advisory-intro {
-    max-width: 560px;
-    color: rgba(255, 255, 255, 0.60);
-    font-family: 'DM Sans', sans-serif;
-    font-size: clamp(0.5rem, 2vw, 1rem);
-    font-weight: 300;
-    line-height: 1.75;
-    margin: 0 auto 40px;
-    text-align: center;
-}
+        .advisory-heading span {
+            color: #FF8C00;
+        }
+        .advisory-intro {
+            max-width: 560px;
+            color: rgba(255, 255, 255, 0.60);
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(0.5rem, 2vw, 1rem);
+            font-weight: 300;
+            line-height: 1.75;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
 
-
-.advisor-card {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
-    gap: 60px;
-    align-items: start;
-}
-
-.advisor-visual {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 0;
-    background: transparent;
-    overflow: hidden;
-    border: 1px solid #168be0;
-    border-radius: 26px;
-    box-shadow: none;
-}
-
-.advisor-visual::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: #ff8c00;
-    pointer-events: none;
-}
-.advisor-photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 25px;
-}
-
-
-
-
-   
-.advisor-content {
-    min-width: 0;
-    padding: 0;
-    font-family: 'DM Sans', sans-serif;
-    color: rgba(255, 255, 255, 0.68);
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    text-align: left;
-}
-
-.advisor-role {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-align: left;
-    color: #0057B8;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    line-height: 1.5;
-    text-transform: none;
-    margin: 0 0 24px;
-}
-
-.advisor-role-line {
-    display: inline-block;
-    width: 24px;
-    height: 2px;
-    background: #FF8C00;
-    flex-shrink: 0;
-}
-
-
+        .advisor-card {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .advisor-visual {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            background: transparent;
+            overflow: hidden;
+            border: 1px solid #168be0;
+            border-radius: 26px;
+            box-shadow: none;
+        }
+        
+        .advisor-visual::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: #ff8c00;
+            pointer-events: none;
+        }
+        .advisor-photo {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: none;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 25px;
+        }
+ 
+        .advisor-content {
+            min-width: 0;
+            padding: 0;
+            font-family: 'DM Sans', sans-serif;
+            color: rgba(255, 255, 255, 0.68);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            text-align: left;
+        }
+        
+        .advisor-role {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            color: #0057B8;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.5;
+            text-transform: none;
+            margin: 0 0 24px;
+        }
+        
+        .advisor-role-line {
+            display: inline-block;
+            width: 24px;
+            height: 2px;
+            background: #FF8C00;
+            flex-shrink: 0;
+        }
         .advisor-name {
             color: #ffffff;
             font-family: 'Syne', sans-serif;
@@ -255,178 +240,25 @@ margin-right: auto;
             }
 
         .advisor-content {
-    padding: 28px 22px 32px;
-    text-align: left;
-}
+            padding: 28px 22px 32px;
+            text-align: left;
+        }
     </style>
 </head>
-
 <body>
 
-    <!-- Header and navigation -->
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="assets/images/logo.png"
-                 alt="DataMatrixAI logo"
-                 class="logo">
-
-            <div class="logo-text">
-                <span class="text-white">Datamatrix</span>
-                <span class="text-white">AI</span>
-                <div class="tagline-text">Make AI work. Responsibly</div>
-            </div>
-        </a>
-
-        <nav id="main-nav">
-            <ul class="nav-list">
-
-                <li>
-                    <a href="index.html"
-                       class="nav-link"
-                       style="padding-right: 22px;">Home</a>
-                </li>
-
-                <!-- Products -->
-                <li class="nav-item--dropdown">
-                    <a href="#" class="nav-link nav-link--has-dropdown">
-                        Products
-                        <i class="fas fa-chevron-down nav-chevron"></i>
-                    </a>
-
-                    <ul class="nav-dropdown">
-                        <li>
-                            <a href="edis.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">EDIS</span>
-                                <span class="nav-dropdown__sub">
-                                    Decision Intelligence Platform
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="lms.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">
-                                    KNOWLEDGE AND COMPETENCY ENGINE
-                                </span>
-                                <span class="nav-dropdown__sub">
-                                    Workforce Intelligence Journey
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Resources -->
-                <li class="nav-item--dropdown">
-                    <a href="#" class="nav-link nav-link--has-dropdown">
-                        Resources
-                        <i class="fas fa-chevron-down nav-chevron"></i>
-                    </a>
-
-                    <ul class="nav-dropdown">
-                        <li>
-                            <a href="blogs.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">Blogs</span>
-                                <span class="nav-dropdown__sub">
-                                    Thinking on enterprise AI
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="povs.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">POVs</span>
-                                <span class="nav-dropdown__sub">Our thinking</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="case-studies.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">Case Studies</span>
-                                <span class="nav-dropdown__sub">
-                                    Real deployments, real results
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Company -->
-                <li class="nav-item--dropdown">
-                    <a href="#" class="nav-link nav-link--has-dropdown">
-                        Company
-                        <i class="fas fa-chevron-down nav-chevron"></i>
-                    </a>
-
-                    <ul class="nav-dropdown">
-                        <li>
-                            <a href="about.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">About Us</span>
-                                <span class="nav-dropdown__sub">Who we are</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="founders.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">Founders</span>
-                                <span class="nav-dropdown__sub">Meet the team</span>
-                            </a>
-                        </li>
-  <li>
-                            <a href="advisory.html"
-                               class="nav-dropdown__link"
-                               aria-current="page">
-                                <span class="nav-dropdown__title">Advisory Board</span>
-                                <span class="nav-dropdown__sub">Meet Our Advisors</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="partnerships.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">Partnerships</span>
-                                <span class="nav-dropdown__sub">STPI and beyond</span>
-                            </a>
-                        </li>
-
-                      
-
-                        <li>
-                            <a href="locations.html" class="nav-dropdown__link">
-                                <span class="nav-dropdown__title">
-                                    Office Locations
-                                </span>
-                                <span class="nav-dropdown__sub">
-                                    Bangalore &amp; Bhubaneswar
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
-
-        <button class="nav-hamburger"
-                id="nav-hamburger"
-                aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <a href="index.html#contact" class="btn-reach">Contact Us</a>
-    </header>
+    <script src="js/nav-inject.js?v=2.0.1"></script>
 
     <!-- Advisory Board content -->
     <main class="advisory-page">
         <div class="advisory-wrap">
-
             <div class="advisory-eyebrow-badge">
-    <span class="advisory-badge-icon">👥</span>
-    <span>THE MINDS GUIDING OUR FUTURE</span>
-</div>
-<h1 class="advisory-heading">
-    Strategic <span>Advisor.</span>
-</h1>
+                <span class="advisory-badge-icon">👥</span>
+                <span>THE MINDS GUIDING OUR FUTURE</span>
+            </div>
+            <h1 class="advisory-heading">
+                Strategic <span>Advisor.</span>
+            </h1>
 
             <p class="advisory-intro">
                 Experienced leadership and strategic perspective to help
@@ -450,11 +282,7 @@ margin-right: auto;
                         <span class="advisor-role-line" aria-hidden="true"></span>
                         Strategic Advisor
                     </p>
-
-                
-
                     <div class="advisor-copy">
-
                         <p>
                             We are pleased to welcome Dr. Sanjay Mohapatra
                             as Strategic Advisor to DatamatrixAI.
@@ -490,12 +318,9 @@ margin-right: auto;
                             We look forward to the value his guidance will
                             bring to our growth journey ahead.
                         </p>
-
                     </div>
-
                 </div>
             </article>
-
         </div>
     </main>
 
